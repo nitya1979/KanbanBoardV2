@@ -1,6 +1,4 @@
-:host{
-    display:flex;
-    flex-grow : 0;
+:host {
+    flex-grow: 0;
     height: 50px;
-
 }
