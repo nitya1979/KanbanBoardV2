@@ -1,0 +1,4 @@
+:host {
+    flex-direction: column;
+    flex-grow: 1;
+}
