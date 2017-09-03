@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+
+    <div class="panel-body">
+        <div style="display: block;width:130px">
+            <canvas baseChart
+                    [data]="doughnutChartData"
+                    [labels]="doughnutChartLabels"
+                    [chartType]="doughnutChartType" 
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"
+                    [options]="options">
+
+            </canvas>
+        </div>
+    </div>
+    <div class="panel-heading">
+        <p class="panel-title">{{project.Name}}</p>
+    </div>
+</div>
