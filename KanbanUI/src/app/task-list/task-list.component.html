@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>Summary</th>
+            <th>Priority</th>
             <th>Project</th>
             <th>DueDate</th>
         </tr>
@@ -9,6 +10,7 @@
     <tbody>
         <tr *ngFor="let t of tasks">
             <td>{{t.Summary}}</td>
+            <td>{{t.Priority}}</td>
             <td>{{t.Project}}</td>
             <td>{{t.DueDate}}</td>
         </tr>

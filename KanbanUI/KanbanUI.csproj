@@ -8,6 +8,7 @@
     <Folder Include="wwwroot\" />
     <Folder Include="src\app\modals\" />
     <Folder Include="src\app\Services\" />
+    <Folder Include="src\app\Account\" />
   </ItemGroup>
 
   <ItemGroup>
