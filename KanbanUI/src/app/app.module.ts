@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule} from './app-routing.module';
 import { ChartsModule } from 'ng2-charts';
 import { DnpModule } from '../dnp/dnp.Module';
+import { AccountModule } from './account/account.module';
 
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -20,7 +21,8 @@ import { TaskListComponent } from './task-list/task-list.component';
     BrowserModule,
     AppRoutingModule,
     ChartsModule,
-    DnpModule
+    DnpModule,
+    AccountModule
   ],
 
   declarations: [

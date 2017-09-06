@@ -7,7 +7,8 @@ const routes: Routes = [
     {path : 'dashboard',
     component : DashBoardComponent
     },
-     {path : '', redirectTo : '/dashboard', pathMatch: 'full'}
+     {path : '', redirectTo : '/dashboard', pathMatch: 'full'},
+     {path : 'account', loadChildren:'app/account/account.module#AccountModule'}
 ];
 
 @NgModule({
