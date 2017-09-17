@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-3" >
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <p class="panel-title">Profile </p>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../assets/images/images.png" class="img-responsive img-circle center-block" />
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-success btn-xs">Followers(100)</button>
+                        <button class="btn btn-success btn-xs">Following(100)</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="list-group">
+                <a href="#"[routerLink]="['../profile']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="list-group-item">
+                    My Profile
+                </a>
+                <a href="#" class="list-group-item">Projects</a>
+                <a href="#" class="list-group-item">Messages</a>
+                <a href="#" class="list-group-item">Requests</a>
+                <a [routerLink]="['changepassword']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" href="#" class="list-group-item">Change Password</a>
+                <a href="#" class="list-group-item">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -4,6 +4,7 @@ import { AppRoutingModule} from './app-routing.module';
 import { ChartsModule } from 'ng2-charts';
 import { DnpModule } from '../dnp/dnp.Module';
 import { AccountModule } from './account/account.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -22,7 +23,8 @@ import { TaskListComponent } from './task-list/task-list.component';
     AppRoutingModule,
     ChartsModule,
     DnpModule,
-    AccountModule
+    AccountModule,
+    NgbModule.forRoot()
   ],
 
   declarations: [

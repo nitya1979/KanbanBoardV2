@@ -9,6 +9,11 @@
     <Folder Include="src\app\modals\" />
     <Folder Include="src\app\Services\" />
     <Folder Include="src\app\account\register\" />
+    <Folder Include="src\app\account\login\" />
+    <Folder Include="src\app\account\profile\" />
+    <Folder Include="src\app\account\home\" />
+    <Folder Include="src\assets\images\" />
+    <Folder Include="src\app\account\change-password\" />
   </ItemGroup>
 
   <ItemGroup>
