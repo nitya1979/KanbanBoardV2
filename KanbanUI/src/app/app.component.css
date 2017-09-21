@@ -1,6 +1,6 @@
 :host {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     position: absolute;
     left: 0px;
     top: 0px;
@@ -8,8 +8,21 @@
     right: 0px;
 }
 
-.container-fluid{
-    flex-direction:column;
-    flex-grow : 1;
+.main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y:auto;
+}
+
+.navleft {
+    
+    display:flex;
+    flex-grow: 0;
+    min-width: 260px;
+    clear:both;
+    height: 100% !important;
+    background-color: #3F547F;
+    color: #dddddd;
 
 }

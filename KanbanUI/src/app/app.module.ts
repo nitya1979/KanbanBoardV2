@@ -5,6 +5,7 @@ import { ChartsModule } from 'ng2-charts';
 import { DnpModule } from '../dnp/dnp.Module';
 import { AccountModule } from './account/account.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProjectModule } from './project/project.module';
 
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -24,7 +25,8 @@ import { TaskListComponent } from './task-list/task-list.component';
     ChartsModule,
     DnpModule,
     AccountModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ProjectModule
   ],
 
   declarations: [

@@ -8,7 +8,11 @@ const routes: Routes = [
     component : DashBoardComponent
     },
      {path : '', redirectTo : '/dashboard', pathMatch: 'full'},
-     {path : 'account', loadChildren:'app/account/account.module#AccountModule'}
+     {path : 'account', loadChildren:'app/account/account.module#AccountModule'},
+     {
+        path : 'projects',
+        loadChildren : 'app/project/project.module#ProjectModule'
+     }
 ];
 
 @NgModule({
