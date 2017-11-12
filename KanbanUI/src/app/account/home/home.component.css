@@ -1,9 +1,0 @@
-.sidebar {
-    height: calc(100vh - 120px);
-    position:fixed;
-    width: 290px;
-}
-
-.active{
-    background-color:gray;
-}

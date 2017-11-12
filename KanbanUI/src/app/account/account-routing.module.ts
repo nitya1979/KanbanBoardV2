@@ -4,7 +4,6 @@ import { RouterModule, Routes} from '@angular/router';
 
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { HomeComponent} from './home/home.component';
 import { ProfileComponent} from './profile/profile.component';
 import { ChangePasswordComponent}  from './change-password/change-password.component';
 
@@ -19,17 +18,11 @@ const userRoutes: Routes = [
     },
     {
         path : 'profile',
-        component : HomeComponent,
-        children :[
-            {
-                path : '',
-                component : ProfileComponent,
-            },
-            {
-                path : 'changepassword',
-                component : ChangePasswordComponent
-            }
-        ]
+        component : ProfileComponent
+    },
+    {
+        path : 'changepassword',
+        component: ChangePasswordComponent
     },
     {
         path: '',

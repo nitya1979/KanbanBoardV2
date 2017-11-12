@@ -13,6 +13,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ContainerComponent } from './container/container.component';
 import { DashBoardComponent } from './dash-board/dash-board.component';
 import { ProjectOverviewComponent } from './project-overview/project-overview.component';
+import { SideBarComponent } from './side-bar/side-bar.component';
 
 import { ProjectService} from './Services/project.service';
 import { TaskListComponent } from './task-list/task-list.component';
@@ -31,6 +32,7 @@ import { TaskListComponent } from './task-list/task-list.component';
 
   declarations: [
     AppComponent,
+    SideBarComponent,
     NavBarComponent,
     FooterComponent,
     ContainerComponent,

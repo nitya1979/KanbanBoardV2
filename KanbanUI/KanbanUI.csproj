@@ -11,7 +11,6 @@
     <Folder Include="src\app\account\register\" />
     <Folder Include="src\app\account\login\" />
     <Folder Include="src\app\account\profile\" />
-    <Folder Include="src\app\account\home\" />
     <Folder Include="src\assets\images\" />
     <Folder Include="src\app\account\change-password\" />
     <Folder Include="src\app\project\project-detail\" />

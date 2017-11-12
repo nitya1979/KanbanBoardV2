@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark brand">
+    <a class="navbar-brand" href="#">KanbanBoard</a>
+</nav>
+<div class="container-flud">
+    <div class="col">
+        <img src="../../assets/images/images.png" width="160px" class="img-responsive rounded-circle center-block" /><br /><br />
+        <p><a href="#" [routerLink]="['projects/projectlist']" >Projects</a><a href="#" [routerLink]="['projects/projectdetail']"><span class="fa fa-plus fa-lg pull-right">&nbsp;</span></a> </p>
+            <ul>
+                <li *ngFor="let p of projects">{{p.Name}}</li>
+
+            </ul>
+    
+            <p>
+                <a href="#" >Tasks</a><a href="#"></a><a href="#"><span class="fa fa-plus fa-lg pull-right">&nbsp;</span></a>
+            </p>
+            <ul>
+               <li *ngFor="let p of projects">{{p.Name}}</li>
+            </ul>
+        </div>
+
+</div>

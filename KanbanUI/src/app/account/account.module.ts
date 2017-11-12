@@ -6,7 +6,6 @@ import { AccountRoutingModule} from './account-routing.module';
 import {RegisterComponent} from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent} from './profile/profile.component';
-import { HomeComponent} from './home/home.component';
 import { ChangePasswordComponent}  from './change-password/change-password.component';
 
 
@@ -21,14 +20,13 @@ import { ChangePasswordComponent}  from './change-password/change-password.compo
     RegisterComponent,
     LoginComponent,
     ProfileComponent,
-    HomeComponent,
     ChangePasswordComponent
   ],
 
   exports: [
     RegisterComponent,
     LoginComponent,
-    HomeComponent
+    ProfileComponent
   ]
  
 })
