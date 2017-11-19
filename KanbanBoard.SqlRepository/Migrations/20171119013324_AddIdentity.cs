@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace KanbanBoard.SqlRepository.Migrations
 {
-    public partial class IntializeIdentity : Migration
+    public partial class AddIdentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,15 +1,18 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanAPI", "KanbanAPI\KanbanAPI.csproj", "{414CA525-BEE4-4CE9-A3CC-E89604D6355E}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanAPI", "KanbanAPI\KanbanAPI.csproj", "{414CA525-BEE4-4CE9-A3CC-E89604D6355E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanUI", "KanbanUI\KanbanUI.csproj", "{15F6BF3C-DCAA-4D8E-87FE-DAF20372BC24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanUI", "KanbanUI\KanbanUI.csproj", "{15F6BF3C-DCAA-4D8E-87FE-DAF20372BC24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoardCore", "KanbanBoardCore\KanbanBoardCore.csproj", "{25914408-B34C-44C0-87A3-28E1CE0240CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoardCore", "KanbanBoardCore\KanbanBoardCore.csproj", "{25914408-B34C-44C0-87A3-28E1CE0240CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanAPI.Test", "KanbanAPI.Test\KanbanAPI.Test.csproj", "{D5D0FAC9-14BF-4A4D-BAE4-CE962CF3CC9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanAPI.Test", "KanbanAPI.Test\KanbanAPI.Test.csproj", "{D5D0FAC9-14BF-4A4D-BAE4-CE962CF3CC9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.SqlRepository", "KanbanBoard.SqlRepository\KanbanBoard.SqlRepository.csproj", "{3FDE8D02-67C6-432A-9732-FFC04F85C605}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.SqlRepository", "KanbanBoard.SqlRepository\KanbanBoard.SqlRepository.csproj", "{3FDE8D02-67C6-432A-9732-FFC04F85C605}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.SqlRepository.Test", "KanbanBoard.SqlRepository.Test\KanbanBoard.SqlRepository.Test.csproj", "{FE65FAE0-885B-4867-9883-79CB3EF6C0CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,5 +40,15 @@ Global
 		{3FDE8D02-67C6-432A-9732-FFC04F85C605}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FDE8D02-67C6-432A-9732-FFC04F85C605}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FDE8D02-67C6-432A-9732-FFC04F85C605}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE65FAE0-885B-4867-9883-79CB3EF6C0CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE65FAE0-885B-4867-9883-79CB3EF6C0CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE65FAE0-885B-4867-9883-79CB3EF6C0CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE65FAE0-885B-4867-9883-79CB3EF6C0CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69A78884-8B90-40DC-BDE1-4AB74C0BE706}
 	EndGlobalSection
 EndGlobal

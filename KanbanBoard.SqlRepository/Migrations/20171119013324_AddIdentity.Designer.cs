@@ -11,8 +11,8 @@ using System;
 namespace KanbanBoard.SqlRepository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20171022212626_IntializeIdentity")]
-    partial class IntializeIdentity
+    [Migration("20171119013324_AddIdentity")]
+    partial class AddIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

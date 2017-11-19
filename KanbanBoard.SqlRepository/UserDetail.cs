@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KanbanBoard.SqlRepository
 {
-    public class UserDetail
+    [Table("tblUserDetail")]
+    public class UserDetail :KanbanEntity
     {
         [Key]
         public string UserName
