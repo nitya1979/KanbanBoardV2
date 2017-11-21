@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170628-02" />
     <PackageReference Include="NBuilder" Version="5.0.0" />
     <PackageReference Include="xunit" Version="2.2.0" />
@@ -17,6 +18,12 @@
   <ItemGroup>
     <ProjectReference Include="..\KanbanBoard.SqlRepository\KanbanBoard.SqlRepository.csproj" />
     <ProjectReference Include="..\KanbanBoardCore\KanbanBoardCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Data.Sqlite">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.data.sqlite.core\2.0.0\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

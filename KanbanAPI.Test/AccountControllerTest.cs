@@ -33,9 +33,10 @@ namespace KanbanAPI.Test
 
 
 
-            var sqlUserRepo = new Mock<IUserRepository>();
+            var sqlUserRepo = new SqlUserRepository(mockUserMgr.Object, mockRoleMgr.Object, null);
+            
 
-            var userService = new UserService(sqlUserRepo.Object);
+            var userService = new UserService(sqlUserRepo);
 
             accountController =  new AccountController(userService);
 

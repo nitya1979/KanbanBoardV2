@@ -6,6 +6,8 @@
 
         public string StageName { get; set; }
 
+        public int ProjectID { get; set; }
+
         public int Order { get; set; }
 
     }

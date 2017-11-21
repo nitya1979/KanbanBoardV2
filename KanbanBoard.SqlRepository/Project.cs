@@ -15,7 +15,7 @@ namespace KanbanBoard.SqlRepository
 
         [Required]
         [MaxLength(255)]
-        public string ProejctName { get; set; }
+        public string ProjectName { get; set; }
 
         [MaxLength(500)]
         public string Description { get; set; }

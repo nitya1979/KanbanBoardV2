@@ -11,14 +11,15 @@ using System;
 namespace KanbanBoard.SqlRepository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20171119050156_AddProject")]
-    partial class AddProject
+    [Migration("20171120000721_InitialSetup")]
+    partial class InitialSetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
+                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("KanbanBoard.SqlRepository.KanbanRoles", b =>
                 {
@@ -38,7 +39,8 @@ namespace KanbanBoard.SqlRepository.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex");
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -66,7 +68,7 @@ namespace KanbanBoard.SqlRepository.Migrations
                     b.Property<DateTime>("ModifyDate")
                         .HasMaxLength(150);
 
-                    b.Property<string>("ProejctName")
+                    b.Property<string>("ProjectName")
                         .IsRequired()
                         .HasMaxLength(255);
 
@@ -214,7 +216,8 @@ namespace KanbanBoard.SqlRepository.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });

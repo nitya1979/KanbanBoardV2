@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using KanbanBoardCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,21 @@ using System.Transactions;
 
 namespace KanbanBoard.SqlRepository
 {
-    public class SqlProjectRepository : IProjectRepository
+    public class SqlProjectRepository : IProjectRepository, IDisposable
     {
         ApplicationDbContext _dbContext = null;
         public SqlProjectRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
+
+        public void Dispose()
+        {
+            if (_dbContext != null)
+                _dbContext.Dispose();
+
+        }
+
         public Task<List<KanbanBoardCore.Project>> GetAllProjects(string userName)
         {
             return Task.Factory.StartNew(() => 
@@ -96,12 +105,15 @@ namespace KanbanBoard.SqlRepository
                 else
                 {
                     dbProject.ModifyDate = DateTime.Now;
-                    _dbContext.Project.Attach(dbProject);
+                    _dbContext.Entry<Project>(dbProject).State = EntityState.Modified;
                 }
 
                 _dbContext.SaveChanges(true);
+                
 
                 project.ProjectID = dbProject.ProjectID;
+
+               //_dbContext.Dispose();
             });
         }
 

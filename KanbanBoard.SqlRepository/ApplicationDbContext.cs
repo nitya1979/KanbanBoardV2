@@ -15,14 +15,16 @@ namespace KanbanBoard.SqlRepository
 
         public DbSet<ProjectStage> ProjectStage { get; set; }
 
-        public static ApplicationDbContext GetApplicationDbContext()
-        {
-            DbContextOptionsBuilder<ApplicationDbContext> optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+        //public static ApplicationDbContext GetApplicationDbContext()
+        //{
+        //    DbContextOptionsBuilder<ApplicationDbContext> optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
-            optionsBuilder.UseSqlite("Filename=./kanban.db");
+        //    optionsBuilder.use
 
-            return new ApplicationDbContext(optionsBuilder.Options);
-        }
+        //    optionsBuilder.ConfigureWarnings( x => x.Ignore(Rela)
+
+        //    return new ApplicationDbContext(optionsBuilder.Options);
+        //}
 
         public DbSet<ProjectTask> ProjectTask { get; set; }
     }

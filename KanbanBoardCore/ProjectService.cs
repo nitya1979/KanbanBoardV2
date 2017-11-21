@@ -49,7 +49,7 @@ namespace KanbanBoardCore
 
                     await _repository.SaveStage(backLog);
                     await _repository.SaveStage(inProgress);
-                    await _repository.SaveStage(inProgress);
+                    await _repository.SaveStage(completed);
                 }
 
                 tranaction.Complete();
