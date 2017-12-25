@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using KanbanBoardCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,27 @@ namespace KanbanBoard.SqlRepository
     public class SqlProjectRepository : IProjectRepository, IDisposable
     {
         ApplicationDbContext _dbContext = null;
+        IDbContextTransaction _transacton = null;
+
         public SqlProjectRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public void BeginTranaction()
+        {
+            this._transacton = this._dbContext.Database.BeginTransaction();
+            
+        }
+
+        public void CommitTransaction()
+        {
+            if( this._transacton != null)
+            {
+                this._transacton.Commit();
+                this._transacton = null;
+            }
+                
         }
 
         public void Dispose()
@@ -89,6 +108,15 @@ namespace KanbanBoard.SqlRepository
                 
             });
             
+        }
+
+        public void RollbackTransaction()
+        {
+            if(this._transacton != null)
+            {
+                this._transacton.Rollback();
+                this._transacton = null;
+            }
         }
 
         public Task SaveProject(KanbanBoardCore.Project project)

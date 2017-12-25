@@ -28,5 +28,15 @@ namespace KanbanBoardCore
         {
             return _userRepository.Login(userName, password, grantType);
         }
+
+        public Task<KanbanResult> GetUserDetails(string userName)
+        {
+            return _userRepository.GetUserDetail(userName);
+        }
+
+        public Task<KanbanResult> SaveUserDetails(UserDetail userDetail)
+        {
+            return _userRepository.SaveUserDetail(userDetail);
+        }
     }
 }

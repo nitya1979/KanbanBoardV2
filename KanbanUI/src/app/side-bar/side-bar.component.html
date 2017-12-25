@@ -3,7 +3,9 @@
 </nav>
 <div class="container-flud">
     <div class="col">
-        <img src="../../assets/images/images.png" width="160px" class="img-responsive rounded-circle center-block" /><br /><br />
+      <div class="text-center">
+        <img src="../../assets/images/images.png" width="160px" class="img-responsive rounded-circle" /><br /><br />
+      </div>
         <p><a href="#" [routerLink]="['projects/projectlist']" >Projects</a><a href="#" [routerLink]="['projects/projectdetail']"><span class="fa fa-plus fa-lg pull-right">&nbsp;</span></a> </p>
             <ul>
                 <li *ngFor="let p of projects">{{p.Name}}</li>

@@ -1,6 +1,7 @@
 using FizzWare.NBuilder;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 using System.Transactions;
 using Xunit;
@@ -77,16 +78,42 @@ namespace KanbanBoard.SqlRepository.Test
             await Assert.ThrowsAsync<DbUpdateException>(()=> _projectRepository.SaveStage(stage));
         }
 
-        public async Task New_Project_Stage_Success_Test()
+        [Fact]
+        public async Task Empty_Stage_Name_Fail_Test()
         {
             var project = Builder<core.Project>.CreateNew().With(p => p.ProjectID = 0).Build();
             project.ProjectName = "NewProject";
             await _projectRepository.SaveProject(project);
-            core.ProjectStage stage = Builder<core.ProjectStage>.CreateNew().With(s => s.StageID = 0).Build();
+            core.ProjectStage stage = Builder<core.ProjectStage>.CreateNew()
+                                                                .With(s => s.StageID = 0)
+                                                                .With( s=> s.StageName = null)
+                                                                .Build();
             stage.ProjectID = project.ProjectID;
-            await _projectRepository.SaveStage(stage);
+            await Assert.ThrowsAsync<DbUpdateException>(() => _projectRepository.SaveStage(stage));
+            Assert.Equal<int>(0, stage.StageID);
+        }
+        [Fact]
+        public async Task New_Project_Stage_Success_Test()
+        {
+            var project = Builder<core.Project>.CreateNew().With(p => p.ProjectID = 0).Build();
+            project.ProjectName = "NewProject";
+            try
+            {
+                _projectRepository.BeginTranaction();
+                await _projectRepository.SaveProject(project);
+                core.ProjectStage stage = Builder<core.ProjectStage>.CreateNew().With(s => s.StageID = 0).Build();
+                stage.ProjectID = project.ProjectID;
+                await _projectRepository.SaveStage(stage);
+                _projectRepository.CommitTransaction();
+                Assert.NotEqual<int>(0, stage.StageID);
+            }
+            catch
+            {
+                _projectRepository.RollbackTransaction();
+            }
 
-            Assert.NotEqual<int>(0, stage.StageID);
+            var prj = await _projectRepository.GetProject(project.ProjectID);
+            Assert.NotEqual<int>(0, prj.ProjectID);
         }
     }
 }

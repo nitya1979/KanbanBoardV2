@@ -33,28 +33,33 @@ namespace KanbanBoardCore
 
         public async Task SaveProject(Project project)
         {
-            //TODO: Implement Transactions
-
-            using (TransactionScope tranaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            try
             {
                 var isNewProject = project.ProjectID == 0;
+                _repository.BeginTranaction();
 
                 await _repository.SaveProject(project);
 
                 if (isNewProject)
                 {
-                    ProjectStage backLog = new ProjectStage { StageName = "Backlog", Order = 1, CreatedBy = project.CreatedBy };
-                    ProjectStage inProgress = new ProjectStage { StageName = "InProgress", Order = 2, CreatedBy = project.CreatedBy };
-                    ProjectStage completed = new ProjectStage { StageName = "Completed", Order = 3, CreatedBy = project.CreatedBy };
+                    ProjectStage backLog = new ProjectStage { StageName = "Backlog", Order = 1, ProjectID=project.ProjectID, CreatedBy = project.CreatedBy };
+                    ProjectStage inProgress = new ProjectStage { StageName = "InProgress", Order = 2, ProjectID = project.ProjectID, CreatedBy = project.CreatedBy };
+                    ProjectStage completed = new ProjectStage { StageName = "Completed", Order = 3, ProjectID = project.ProjectID, CreatedBy = project.CreatedBy };
 
                     await _repository.SaveStage(backLog);
                     await _repository.SaveStage(inProgress);
                     await _repository.SaveStage(completed);
                 }
 
-                tranaction.Complete();
-                
+                _repository.CommitTransaction();
             }
+            catch(Exception ex)
+            {
+                _repository.RollbackTransaction();
+                throw;
+            }
+
+
         }
 
         public async Task SaveStage(ProjectStage stage)

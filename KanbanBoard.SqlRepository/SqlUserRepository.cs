@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using KanbanBoardCore;
 using Microsoft.AspNetCore.Identity;
+using core = KanbanBoardCore;
 
 namespace KanbanBoard.SqlRepository
 {
@@ -40,6 +41,29 @@ namespace KanbanBoard.SqlRepository
    
         }
 
+        public async Task<KanbanResult> GetUserDetail(string userName)
+        {
+            var user = await userManager.FindByNameAsync(userName);
+
+            if (user != null)
+            {
+
+                core.UserDetail userDetail = new core.UserDetail
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    PhoneNo = user.PhoneNumber,
+                    ImageUrl = user.ImageUrl,
+                    AboutMe = user.AboutMe
+                };
+
+                return KanbanResult.CreateOkResult(userDetail);
+            }
+            else
+                return KanbanResult.CreateErrorResult(new List<string> { "User not found" });
+            
+        }
+
         public async Task<KanbanResult> Login(string userName, string password, string grantType)
         {
             var user = await this.userManager.FindByEmailAsync(userName);
@@ -57,6 +81,8 @@ namespace KanbanBoard.SqlRepository
                 return KanbanResult.CreateErrorResult(new List<string>() { "User doesn't exist" });
             
         }
+
+        
 
         public async Task<KanbanResult> Register(string userName, string password)
         {
@@ -83,6 +109,28 @@ namespace KanbanBoard.SqlRepository
 
         }
 
+        public async Task<KanbanResult> SaveUserDetail(UserDetail userDetail)
+        {
+            var user = await userManager.FindByNameAsync(userDetail.UserName);
 
+            if( user != null)
+            {
+                //user.Email = userDetail.Email,
+                user.PhoneNumber = userDetail.PhoneNo;
+                user.ImageUrl = userDetail.ImageUrl;
+                user.AboutMe = userDetail.AboutMe;
+
+                IdentityResult result = await userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                    return KanbanResult.CreateOkResult(null);
+                else
+                    return KanbanResult.CreateErrorResult(result.Errors.Select(e => e.Description).ToList());
+            }
+            else
+            {
+                return KanbanResult.CreateErrorResult(new List<string> { "User '" + userDetail.UserName + "' not found" });
+            }
+        }
     }
 }

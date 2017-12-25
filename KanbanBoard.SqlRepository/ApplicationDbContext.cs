@@ -9,22 +9,10 @@ namespace KanbanBoard.SqlRepository
         {
              
         }
-        public DbSet<UserDetail> UserDetail { get; set; }
-
+       
         public DbSet<Project> Project { get; set; }
 
         public DbSet<ProjectStage> ProjectStage { get; set; }
-
-        //public static ApplicationDbContext GetApplicationDbContext()
-        //{
-        //    DbContextOptionsBuilder<ApplicationDbContext> optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-
-        //    optionsBuilder.use
-
-        //    optionsBuilder.ConfigureWarnings( x => x.Ignore(Rela)
-
-        //    return new ApplicationDbContext(optionsBuilder.Options);
-        //}
 
         public DbSet<ProjectTask> ProjectTask { get; set; }
     }

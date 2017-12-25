@@ -11,5 +11,8 @@ namespace KanbanBoardCore
 
         Task<KanbanResult> Login(string userName, string password, string grantType);
 
+        Task<KanbanResult> GetUserDetail(string userName);
+
+        Task<KanbanResult> SaveUserDetail(UserDetail userDetail);
     }
 }

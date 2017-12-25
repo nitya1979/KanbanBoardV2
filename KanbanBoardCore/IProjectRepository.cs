@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace KanbanBoardCore
 {
-    public interface IProjectRepository
+    public interface IProjectRepository : ITransactable
     {
         Task<List<Project>> GetAllProjects(string userName);
 

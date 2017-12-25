@@ -46,7 +46,18 @@ namespace KanbanAPI.Controllers
 
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("validateuser")]
+        public async Task<IActionResult> ValidateUser(string userName)
+        {
+            KanbanResult result = await _userService.GetUserDetails(userName);
 
+            if (result.Success)
+                return BadRequest(KanbanResult.CreateErrorResult(new List<string> { "This email address is already registered" }));
+            else
+                return Ok(KanbanResult.CreateOkResult(null));
+        }
 
         [HttpPost]
         [Route("changepassword")]
@@ -75,5 +86,65 @@ namespace KanbanAPI.Controllers
 
 
         }
+
+        [HttpGet]
+        [Route("userdetail")]
+        public async Task<IActionResult> UserDetail(string userName)
+        {
+            if (!string.IsNullOrEmpty(userName))
+                return BadRequest(KanbanResult.CreateErrorResult(new List<string>() { "Username is not provided." }));
+
+            KanbanResult result = await _userService.GetUserDetails(userName);
+
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result);
+        }
+
+        [HttpPost]
+        [Route("updatephone")]
+        public async Task<IActionResult> UpdateContact([FromBody]string phoneno )
+        {
+            KanbanResult result = await _userService.GetUserDetails(this.User.Identity.Name);
+
+            if (result.Success)
+            {
+                UserDetail user = result.Result as UserDetail;
+
+                user.PhoneNo = phoneno;
+
+                result = await _userService.SaveUserDetails(user);
+
+                if (result.Success)
+                    return Ok(result);
+                else
+                    return BadRequest(result);
+            }
+            else
+                return BadRequest(result);
+        }
+
+        public async Task<IActionResult> UpdateProfile([FromBody]UserDetailModel model)
+        {
+            KanbanResult result = await _userService.GetUserDetails(this.User.Identity.Name);
+
+            if( result.Success)
+            {
+                UserDetail user = result.Result as UserDetail;
+
+                user.AboutMe = model.AboutMe;
+
+                result = await _userService.SaveUserDetails(user);
+
+                if (result.Success)
+                    return Ok(result);
+                else
+                    return BadRequest(result);
+            }
+            else
+                return BadRequest(result);
+        }
+
     }
 }
