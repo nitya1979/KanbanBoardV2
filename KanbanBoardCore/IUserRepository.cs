@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace KanbanBoardCore
@@ -14,5 +15,7 @@ namespace KanbanBoardCore
         Task<KanbanResult> GetUserDetail(string userName);
 
         Task<KanbanResult> SaveUserDetail(UserDetail userDetail);
+
+        Task<List<UserDetail>> GetUsers(string partialUserName);
     }
 }

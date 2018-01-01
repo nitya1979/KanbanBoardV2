@@ -56,7 +56,7 @@ namespace KanbanAPI.Controllers
 			}
 
 
-			return BadRequest("Could not create token");
+			return BadRequest(result.Result);
         }
 
 

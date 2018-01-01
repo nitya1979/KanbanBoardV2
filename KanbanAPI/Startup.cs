@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using KanbanBoard.SqlRepository;
 using KanbanBoardCore;
+using KanbanAPI.Filters;
 
 namespace KanbanAPI
 {
@@ -58,6 +59,10 @@ namespace KanbanAPI
             services.AddTransient<IUserRepository, SqlUserRepository>();
             services.AddTransient<UserService, UserService>();
 
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new ApiValidationFilterAttribute());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

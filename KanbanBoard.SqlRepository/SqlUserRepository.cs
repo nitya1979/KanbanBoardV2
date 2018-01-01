@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using KanbanBoardCore;
 using Microsoft.AspNetCore.Identity;
 using core = KanbanBoardCore;
+using AutoMapper;
 
 namespace KanbanBoard.SqlRepository
 {
@@ -62,6 +63,28 @@ namespace KanbanBoard.SqlRepository
             else
                 return KanbanResult.CreateErrorResult(new List<string> { "User not found" });
             
+        }
+
+        public Task<List<UserDetail>> GetUsers(string partialUserName)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                IList<UserEntity> users = null;
+
+                if (!string.IsNullOrEmpty(partialUserName))
+                    users = userManager.Users.ToList();
+                else
+                    users = userManager.Users.Where(u => u.UserName.Contains(partialUserName)).ToList();
+
+                List<UserDetail> userDetails = new List<UserDetail>();
+
+                foreach (var usr in users)
+                {
+                    userDetails.Add(Mapper.Map<UserDetail>(usr));
+                }
+
+                return userDetails;
+            });
         }
 
         public async Task<KanbanResult> Login(string userName, string password, string grantType)

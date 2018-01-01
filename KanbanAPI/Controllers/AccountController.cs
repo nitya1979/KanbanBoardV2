@@ -6,6 +6,8 @@ using KanbanBoardCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using KanbanAPI.Filters;
+using KanbanAPI.Helper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,34 +31,27 @@ namespace KanbanAPI.Controllers
         {
             KanbanResult result = null;
 
-            if( model.Password == model.ConfirmPassword)
-            {
-                result = await _userService.Register(model.Email, model.Password);
+            result = await _userService.Register(model.Email, model.Password);
 
-                if (result.Success)
-                    return Ok(result);
-                else
-                    return BadRequest(result);
-                        
-            }
+            if (result.Success)
+                return Ok(new ApiOkResponse(null));
             else
-            {
-                return BadRequest(KanbanResult.CreateErrorResult(new List<string>() { "Confirmed password is not matching" }));
-            }
+                return BadRequest(new ApiBadRequestResponse(result.Errors.ToArray()));
+
 
         }
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("validateuser")]
+        [Route("validateuser/{userName}")]
         public async Task<IActionResult> ValidateUser(string userName)
         {
             KanbanResult result = await _userService.GetUserDetails(userName);
 
             if (result.Success)
-                return BadRequest(KanbanResult.CreateErrorResult(new List<string> { "This email address is already registered" }));
+                return BadRequest(new ApiBadRequestResponse(new string[] { userName + " already exists." } ));
             else
-                return Ok(KanbanResult.CreateOkResult(null));
+                return Ok();
         }
 
         [HttpPost]
@@ -64,26 +59,15 @@ namespace KanbanAPI.Controllers
         public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordModel model)
         {
             KanbanResult kanbanResult = new KanbanResult();
+           
+            var result = await _userService.ChangePassword(this.User.Identity.Name, model.CurrentPassword, model.NewPassword);
 
-            if (model.NewPassword == model.ConfirmPassword)
+            if (result.Success)
             {
-                var result = await _userService.ChangePassword(this.User.Identity.Name, model.CurrentPassword, model.NewPassword);
-
-                if (result.Success)
-                {
-                    return Ok(result);
-                }
-                else
-                    return BadRequest(result);
-
+                return Ok(new ApiOkResponse(null));
             }
             else
-            {
-                
-                return BadRequest(KanbanResult.CreateErrorResult(new List<string>{"Confirmed password is not matching"}));
-
-            }
-
+                return BadRequest(new ApiBadRequestResponse(result.Errors.ToArray()));
 
         }
 
