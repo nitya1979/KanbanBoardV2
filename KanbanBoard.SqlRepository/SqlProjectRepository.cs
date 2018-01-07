@@ -15,7 +15,6 @@ namespace KanbanBoard.SqlRepository
     {
         ApplicationDbContext _dbContext = null;
         IDbContextTransaction _transacton = null;
-
         public SqlProjectRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -44,65 +43,72 @@ namespace KanbanBoard.SqlRepository
 
         }
 
-        public Task<List<KanbanBoardCore.Project>> GetAllProjects(string userName)
+        public Task<KanbanCollection<Project>> GetAllProjects(string userName)
         {
             return Task.Factory.StartNew(() => 
             {
-                var dbProjList =  _dbContext.Project.Where(p => p.CreatedBy == userName).ToList();
+                var count = _dbContext.Project.Where(p => p.CreatedBy == userName).Count();
 
-                List<KanbanBoardCore.Project> projectList = new List<KanbanBoardCore.Project>();
+                var dbProjList =  _dbContext.Project.Where(p => p.CreatedBy == userName)
+                                                    .OrderByDescending(k => k.DueDate)
+                                                    .ToList();
+
+                List<Project> projectList = new List<Project>();
                 foreach (var dbproj in dbProjList)
                 {
-                    projectList.Add(Mapper.Map<KanbanBoardCore.Project>(dbproj));
+                    projectList.Add(Mapper.Map<Project>(dbproj));
                 }
 
-                return projectList;
+                return new KanbanCollection<Project>(projectList, count);
             });
         }
 
-        public Task<List<KanbanBoardCore.Project>> GetAllProjects(string userName, DateTime fromDate, DateTime toDate, int pageNo, int count)
+        public Task<KanbanCollection<Project>> GetAllProjects(string userName, int pageNo, int count)
         {
-
+            //TODO: fix paging logic
             return Task.Factory.StartNew(() =>
             {
+                var totalCount = _dbContext.Project.Where(p => p.CreatedBy == userName).Count();
+
                 var dbProjList = _dbContext.Project
-                                           .Where(p => p.CreatedBy == userName && p.DueDate >= fromDate && p.DueDate <= toDate)
+                                           .Where(p => p.CreatedBy == userName)
+                                           .OrderByDescending( k => k.DueDate)
                                            .Skip(pageNo * count)
                                            .Take(count);
 
-                List<KanbanBoardCore.Project> projectList = new List<KanbanBoardCore.Project>();
+                List<Project> projectList = new List<Project>();
                 foreach (var dbproj in dbProjList)
                 {
-                    projectList.Add(Mapper.Map<KanbanBoardCore.Project>(dbproj));
+                    projectList.Add(Mapper.Map<Project>(dbproj));
                 }
 
-                return projectList;
+                return new KanbanCollection<Project>( projectList, totalCount);
             });
         }
 
-        public Task<List<KanbanBoardCore.ProjectStage>> GetAllStages(int projectID)
+        public Task<List<ProjectStage>> GetAllStages(int projectID)
         {
             return Task.Factory.StartNew(() =>
             {
-                List<KanbanBoardCore.ProjectStage> stages = new List<KanbanBoardCore.ProjectStage>();
+                List<ProjectStage> stages = new List<ProjectStage>();
 
                 foreach (var dbStage in _dbContext.ProjectStage.Where(s => s.ProjectID == projectID).ToList())
                 {
-                    stages.Add(Mapper.Map<KanbanBoardCore.ProjectStage>(dbStage));
+                    stages.Add(Mapper.Map<ProjectStage>(dbStage));
                 }
 
                 return stages;
             });
         }
 
-        public Task<KanbanBoardCore.Project> GetProject(int projectID)
+        public Task<Project> GetProject(int projectID)
         {
             return Task.Factory.StartNew(() =>
             {
                 var dbProj = _dbContext.Project.Where(p => p.ProjectID == projectID).FirstOrDefault();
 
                 if (dbProj != null)
-                    return Mapper.Map<KanbanBoardCore.Project>(dbProj);
+                    return Mapper.Map<Project>(dbProj);
                 else
                     return null;
                 
@@ -119,12 +125,12 @@ namespace KanbanBoard.SqlRepository
             }
         }
 
-        public Task SaveProject(KanbanBoardCore.Project project)
+        public Task SaveProject(Project project)
         {
             return Task.Factory.StartNew(() =>
             {
-                Project dbProject = Mapper.Map<Project>(project);
-                
+                DbProject dbProject = Mapper.Map<DbProject>(project);
+
                 if (project.ProjectID == 0)
                 {
                     dbProject.CreateDate = DateTime.Now;
@@ -133,7 +139,7 @@ namespace KanbanBoard.SqlRepository
                 else
                 {
                     dbProject.ModifyDate = DateTime.Now;
-                    _dbContext.Entry<Project>(dbProject).State = EntityState.Modified;
+                    _dbContext.Entry<DbProject>(dbProject).State = EntityState.Modified;
                 }
 
                 _dbContext.SaveChanges(true);
@@ -145,12 +151,12 @@ namespace KanbanBoard.SqlRepository
             });
         }
 
-        public Task SaveStage(KanbanBoardCore.ProjectStage stage)
+        public Task SaveStage(ProjectStage stage)
         {
            
             return Task.Factory.StartNew(() =>
             {
-                ProjectStage dbStage = Mapper.Map<ProjectStage>(stage);
+                DbProjectStage dbStage = Mapper.Map<DbProjectStage>(stage);
 
                 if (dbStage.StageID == 0)
                 {

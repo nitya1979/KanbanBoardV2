@@ -7,7 +7,7 @@ using System.Text;
 namespace KanbanBoard.SqlRepository
 {
     [Table("tblProjectStage")]
-    public class ProjectStage : KanbanEntity
+    public class DbProjectStage : KanbanEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,7 +24,7 @@ namespace KanbanBoard.SqlRepository
         public int ProjectID { get; set; }
 
         [ForeignKey("ProjectID")]
-        public Project Project {get ; set;}
+        public DbProject Project {get ; set;}
         
     }
 }

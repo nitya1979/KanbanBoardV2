@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using KanbanBoardCore;
+using KanbanAPI.ViewModels;
+using AutoMapper;
 
 namespace KanbanAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/User")]
+    [Route("api/Users")]
     public class UserController : Controller
     {
         UserService _userService = null;
@@ -20,34 +22,46 @@ namespace KanbanAPI.Controllers
         }
         // GET: api/User
         [HttpGet]
-        public async Task<IActionResult> Get(string userName=null)
+        [Route("Search")]
+        public async Task<IActionResult> Search(string userName=null)
         {
             List<UserDetail> users = await _userService.GetUsers(userName);
             
-
             return Ok(users);
         }
 
         // GET: api/User/5
         [HttpGet]
-        [Route("{id}")]
-        public string Get(int id)
+        [Route("{userName}")]
+        public async Task<IActionResult> Get(string userName)
         {
-            return "value";
+            if (string.IsNullOrEmpty(userName))
+                return BadRequest(KanbanResult.CreateErrorResult(new List<string>() { "Username is not provided." }));
+
+            KanbanResult result = await _userService.GetUserDetails(userName);
+
+            if (result.Success)
+                return Ok(result.Result);
+            else
+                return BadRequest(result.Errors.ToArray()) ;
         }
         
         // POST: api/User
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> Post([FromBody]UserDetailModel model)
         {
+            var userDetail = Mapper.Map<UserDetail>(model);
+            userDetail.UserName = User.Identity.Name;
+            userDetail.Email = User.Identity.Name;
+
+            var result = await _userService.SaveUserDetails(userDetail);
+
+            if (result.Success)
+                return Ok();
+            else
+                return BadRequest(result.Errors.ToArray());
         }
-        
-        // PUT: api/User/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-        
+                
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)

@@ -14,9 +14,9 @@ namespace KanbanBoardCore
             this._userRepository = userRepository;
         }
 
-        public Task<KanbanResult> Register(string userName, string password)
+        public Task<KanbanResult> Register(string userName, string email, string password)
         {
-            return _userRepository.Register(userName, password);
+            return _userRepository.Register(userName, email, password);
         }
 
         public Task<KanbanResult> ChangePassword(string userName, string currentPassword, string newPassword)

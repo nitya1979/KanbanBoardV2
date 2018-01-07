@@ -11,7 +11,7 @@ using System;
 namespace KanbanBoard.SqlRepository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20171120000721_InitialSetup")]
+    [Migration("20180106211151_InitialSetup")]
     partial class InitialSetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,107 @@ namespace KanbanBoard.SqlRepository.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("KanbanBoard.SqlRepository.DbProject", b =>
+                {
+                    b.Property<int>("ProjectID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CompletionDate");
+
+                    b.Property<DateTime>("CreateDate");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(150);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime>("DueDate");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(150);
+
+                    b.Property<DateTime>("ModifyDate");
+
+                    b.Property<string>("ProjectName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.HasKey("ProjectID");
+
+                    b.ToTable("tblProject");
+                });
+
+            modelBuilder.Entity("KanbanBoard.SqlRepository.DbProjectStage", b =>
+                {
+                    b.Property<int>("StageID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreateDate");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(150);
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(150);
+
+                    b.Property<DateTime>("ModifyDate");
+
+                    b.Property<int>("Order");
+
+                    b.Property<int>("ProjectID");
+
+                    b.Property<string>("StageName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("StageID");
+
+                    b.HasIndex("ProjectID");
+
+                    b.ToTable("tblProjectStage");
+                });
+
+            modelBuilder.Entity("KanbanBoard.SqlRepository.DbProjectTask", b =>
+                {
+                    b.Property<int>("TaskID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CompletionDate");
+
+                    b.Property<DateTime>("CreateDate");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(150);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(4000);
+
+                    b.Property<DateTime>("DueDate");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(150);
+
+                    b.Property<DateTime>("ModifyDate");
+
+                    b.Property<int>("StageID");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("TaskID");
+
+                    b.HasIndex("StageID");
+
+                    b.ToTable("tblProjectTask");
+                });
 
             modelBuilder.Entity("KanbanBoard.SqlRepository.KanbanRoles", b =>
                 {
@@ -45,136 +146,12 @@ namespace KanbanBoard.SqlRepository.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("KanbanBoard.SqlRepository.Project", b =>
-                {
-                    b.Property<int>("ProjectID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CompletionDate");
-
-                    b.Property<DateTime>("CreateDate");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(150);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500);
-
-                    b.Property<DateTime>("DueDate");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifyDate")
-                        .HasMaxLength(150);
-
-                    b.Property<string>("ProjectName")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<DateTime>("StartDate");
-
-                    b.HasKey("ProjectID");
-
-                    b.ToTable("tblProject");
-                });
-
-            modelBuilder.Entity("KanbanBoard.SqlRepository.ProjectStage", b =>
-                {
-                    b.Property<int>("StageID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreateDate");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(150);
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifyDate")
-                        .HasMaxLength(150);
-
-                    b.Property<int>("Order");
-
-                    b.Property<int>("ProjectID");
-
-                    b.Property<string>("StageName")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.HasKey("StageID");
-
-                    b.HasIndex("ProjectID");
-
-                    b.ToTable("tblProjectStage");
-                });
-
-            modelBuilder.Entity("KanbanBoard.SqlRepository.ProjectTask", b =>
-                {
-                    b.Property<int>("TaskID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CompletionDate");
-
-                    b.Property<DateTime>("CreateDate");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(150);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(4000);
-
-                    b.Property<DateTime>("DueDate");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifyDate")
-                        .HasMaxLength(150);
-
-                    b.Property<int>("StageID");
-
-                    b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.HasKey("TaskID");
-
-                    b.HasIndex("StageID");
-
-                    b.ToTable("tblProjectTask");
-                });
-
-            modelBuilder.Entity("KanbanBoard.SqlRepository.UserDetail", b =>
-                {
-                    b.Property<string>("UserName")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AboutMe");
-
-                    b.Property<DateTime>("CreateDate");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(150);
-
-                    b.Property<string>("ImageUrl");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifyDate")
-                        .HasMaxLength(150);
-
-                    b.HasKey("UserName");
-
-                    b.ToTable("tblUserDetail");
-                });
-
             modelBuilder.Entity("KanbanBoard.SqlRepository.UserEntity", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AboutMe");
 
                     b.Property<int>("AccessFailedCount");
 
@@ -185,6 +162,8 @@ namespace KanbanBoard.SqlRepository.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -306,17 +285,17 @@ namespace KanbanBoard.SqlRepository.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("KanbanBoard.SqlRepository.ProjectStage", b =>
+            modelBuilder.Entity("KanbanBoard.SqlRepository.DbProjectStage", b =>
                 {
-                    b.HasOne("KanbanBoard.SqlRepository.Project", "Project")
+                    b.HasOne("KanbanBoard.SqlRepository.DbProject", "Project")
                         .WithMany("Stages")
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("KanbanBoard.SqlRepository.ProjectTask", b =>
+            modelBuilder.Entity("KanbanBoard.SqlRepository.DbProjectTask", b =>
                 {
-                    b.HasOne("KanbanBoard.SqlRepository.ProjectStage", "Stage")
+                    b.HasOne("KanbanBoard.SqlRepository.DbProjectStage", "Stage")
                         .WithMany()
                         .HasForeignKey("StageID")
                         .OnDelete(DeleteBehavior.Cascade);

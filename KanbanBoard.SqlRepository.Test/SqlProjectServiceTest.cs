@@ -16,8 +16,6 @@ namespace KanbanBoard.SqlRepository.Test
         static SqlProjectServiceTest()
         {
             MapperConfig.InitializeMapping();
-
-
         }
         public SqlProjectServiceTest()
         {
@@ -33,7 +31,13 @@ namespace KanbanBoard.SqlRepository.Test
             }
 
             ApplicationDbContext dbContext = new ApplicationDbContext(optionsBuilder.Options);
-            
+
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new SqlMapperConfiguraiton());
+                //cfg.ForAllMaps((map, exp) => exp.ForAllOtherMembers(opt => opt.Ignore()));
+            });
+
             _projectRepository = new SqlProjectRepository(new ApplicationDbContext(optionsBuilder.Options));
         }
         [Fact]

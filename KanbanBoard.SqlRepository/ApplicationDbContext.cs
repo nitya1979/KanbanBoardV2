@@ -10,11 +10,11 @@ namespace KanbanBoard.SqlRepository
              
         }
        
-        public DbSet<Project> Project { get; set; }
+        public DbSet<DbProject> Project { get; set; }
 
-        public DbSet<ProjectStage> ProjectStage { get; set; }
+        public DbSet<DbProjectStage> ProjectStage { get; set; }
 
-        public DbSet<ProjectTask> ProjectTask { get; set; }
+        public DbSet<DbProjectTask> ProjectTask { get; set; }
     }
 
 }

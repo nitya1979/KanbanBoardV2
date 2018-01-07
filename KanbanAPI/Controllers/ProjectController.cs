@@ -5,63 +5,128 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using KanbanBoardCore;
-using KanbanAPI.Helper;
+using KanbanAPI.ViewModels;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace KanbanAPI.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     [Route("api")]
     public class ProjectController : Controller
     {
+
+        ProjectService _projectService = null;
+        public ProjectController(ProjectService projectService)
+        {
+            this._projectService = projectService;
+        }
+
         // GET: api/Project
         [HttpGet]
-        [Route("Projects")]
+        //[Route("Projects")]
         [Route("Users/{userName}/Projects")]
-        public async Task<IActionResult> Get(string userName, DateTime? fromDate, DateTime? toDate)
+        [AllowAnonymous]
+        public async Task<IActionResult> Get(string userName, int pageNo = 0, int count=0)
         {
-            return await Task.Factory.StartNew(() =>
-            {
-                Console.WriteLine(this.Request.Path);
-                Console.WriteLine(this.Request.QueryString);
-                Console.WriteLine("userName :{0}", userName);
-                Console.WriteLine("From Date : {0}", fromDate);
-                Console.WriteLine("To Date : {0}", toDate);
-                List<Project> p = new List<Project>();
-                p.Add(new Project { ProjectName = "Test1", DueDate = DateTime.Now.Date });
-                p.Add(new Project { ProjectName = "Test2", DueDate = DateTime.Now.Date });
-                p.Add(new Project { ProjectName = "Test3", DueDate = DateTime.Now.Date });
-                p.Add(new Project { ProjectName = "Test4", DueDate = DateTime.Now.Date });
-                KanbanCollection<Project> values = new KanbanCollection<Project>(p, 5);
-                
-                return Ok(new ApiOkResponse(values));
-            });
+            KanbanCollection<Project> projects = null;
+
+            if (pageNo == 0 || count == 0)
+                projects = await _projectService.GetAllProjects(userName);
+            else
+                projects = await _projectService.GetAllProjects(userName, pageNo, count);
+
+            return Ok(projects);
 
         }
 
         // GET: api/Project/5
         [HttpGet]
-        [Route("Project/{id}")]
-        public string Get(int id)
+        [Route("Projects/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            if (id == 0)
+                return NotFound(new string[] { "Invalid Project ID" });
+
+            var project = await _projectService.GetProject(id);
+
+            if (project == null)
+                return NotFound(new string[] { "Project Not Found" });
+
+            return Ok(project);
         }
         
         // POST: api/Project
         [HttpPost]
-        public void Post([FromBody]string value)
+        [Route("Projects")]
+
+        public async Task<IActionResult> Post([FromBody]ProjectViewModel model)
         {
+            
+            Project proj = Mapper.Map<Project>(model);
+            if (proj.ProjectID == 0)
+                proj.CreatedBy = User.Identity.Name;
+            Console.WriteLine(proj.CreatedBy);
+            Console.WriteLine(proj.ProjectName);
+            Console.WriteLine(proj.CreateDate);
+
+            await _projectService.SaveProject(proj);
+
+            return Ok();
         }
         
         // PUT: api/Project/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut("Projects/{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody]ProjectViewModel model)
         {
+            if (id != model.ProjectID)
+                throw new ArgumentException("Incorrect project detail.");
+
+            Project proj = Mapper.Map<Project>(model);
+
+            await _projectService.SaveProject(proj);
+
+            return Ok();
         }
         
+        [HttpGet("Projects/{id}/stages")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Stages(int id)
+        {
+            if (id == 0)
+                return BadRequest(new string[] { "Invalid project" });
+
+            List<ProjectStage> stages = await _projectService.GetStages(id);
+
+            return Ok(stages.ToArray());
+
+        }
+
+        [HttpPost("Projects/{id}/stages")]
+        public async Task<IActionResult> Stages([FromBody]StageViewModel model)
+        {
+            ProjectStage stage = Mapper.Map<ProjectStage>(model);
+
+            await _projectService.SaveStage(stage);
+
+            return Ok();
+        }
+
+        //[HttpPut("Projects/{id}/Complete")]
+        //public async Task<IActionResult> Complete(int id)
+        //{
+            
+        //}
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            
         }
+
+
     }
 }

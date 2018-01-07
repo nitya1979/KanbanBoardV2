@@ -7,7 +7,7 @@ using System.Text;
 namespace KanbanBoard.SqlRepository
 {
     [Table("tblProject")]
-    public class Project : KanbanEntity
+    public class DbProject : KanbanEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -26,9 +26,9 @@ namespace KanbanBoard.SqlRepository
         [Required]
         public DateTime DueDate { get; set; }
 
-        public DateTime CompletionDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
 
-        public List<ProjectStage> Stages { get; set; }
+        public List<DbProjectStage> Stages { get; set; }
 
     }
 }

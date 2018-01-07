@@ -15,14 +15,14 @@ namespace KanbanBoardCore
             this._repository = repository;
 
         }
-        public async Task<List<Project>> GetAllProjects(string userName)
+        public async Task<KanbanCollection<Project>> GetAllProjects(string userName)
         {
            return await _repository.GetAllProjects(userName);
         }
 
-        public async Task<List<Project>> GetAllProjects(string userName, DateTime fromDate, DateTime toDate, int pageNo, int count)
+        public async Task<KanbanCollection<Project>> GetAllProjects(string userName, int pageNo, int count)
         {
-            return await _repository.GetAllProjects(userName, fromDate, toDate, pageNo, count);
+            return await _repository.GetAllProjects(userName, pageNo, count);
             
         }
 
@@ -53,7 +53,7 @@ namespace KanbanBoardCore
 
                 _repository.CommitTransaction();
             }
-            catch(Exception ex)
+            catch
             {
                 _repository.RollbackTransaction();
                 throw;
@@ -67,6 +67,20 @@ namespace KanbanBoardCore
             await _repository.SaveStage(stage);
         }
 
+        public async Task<List<ProjectStage>> GetStages(int projectID)
+        {
+            if (projectID == 0)
+                throw new KanbanException("Invalid project ID");
+
+            return await _repository.GetAllStages(projectID);
+        }
+
+        //public async Task Complete(int projectId)
+        //{
+        //    Project proj = await _repository.GetProject(projectId);
+
+            
+        //}
 
     }
 }

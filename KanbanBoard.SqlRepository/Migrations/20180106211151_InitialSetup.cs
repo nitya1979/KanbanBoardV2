@@ -28,10 +28,12 @@ namespace KanbanBoard.SqlRepository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AboutMe = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -59,31 +61,14 @@ namespace KanbanBoard.SqlRepository.Migrations
                     CreatedBy = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifyDate = table.Column<DateTime>(type: "datetime2", maxLength: 150, nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    ModifyDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProjectName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblProject", x => x.ProjectID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "tblUserDetail",
-                columns: table => new
-                {
-                    UserName = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AboutMe = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifyDate = table.Column<DateTime>(type: "datetime2", maxLength: 150, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tblUserDetail", x => x.UserName);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,8 +185,8 @@ namespace KanbanBoard.SqlRepository.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifyDate = table.Column<DateTime>(type: "datetime2", maxLength: 150, nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    ModifyDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
                     ProjectID = table.Column<int>(type: "int", nullable: false),
                     StageName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
@@ -228,8 +213,8 @@ namespace KanbanBoard.SqlRepository.Migrations
                     CreatedBy = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: true),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifyDate = table.Column<DateTime>(type: "datetime2", maxLength: 150, nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    ModifyDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StageID = table.Column<int>(type: "int", nullable: false),
                     Summary = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
@@ -313,9 +298,6 @@ namespace KanbanBoard.SqlRepository.Migrations
 
             migrationBuilder.DropTable(
                 name: "tblProjectTask");
-
-            migrationBuilder.DropTable(
-                name: "tblUserDetail");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

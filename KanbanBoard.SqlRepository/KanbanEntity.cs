@@ -14,9 +14,9 @@ namespace KanbanBoard.SqlRepository
         [Required]
         public DateTime CreateDate { get; set; }
 
-        [MaxLength(150)]
-        public DateTime ModifyDate { get; set; }
+        public DateTime? ModifyDate { get; set; }
 
+        [MaxLength(150)]
         public string ModifiedBy { get; set; }
     }
 }

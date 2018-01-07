@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using KanbanBoard.SqlRepository;
 using KanbanBoardCore;
 using KanbanAPI.Filters;
+using AutoMapper;
+using KanbanAPI.ViewModels;
 
 namespace KanbanAPI
 {
@@ -50,6 +52,7 @@ namespace KanbanAPI
                 };
             });
 
+            
             services.AddDbContext<ApplicationDbContext>( options => options.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=Kanban_Dev;Integrated Security=True;User ID=sa;Password=e58@t4Ie"));
 
             services.AddIdentity<UserEntity, KanbanRoles>()
@@ -58,11 +61,22 @@ namespace KanbanAPI
 
             services.AddTransient<IUserRepository, SqlUserRepository>();
             services.AddTransient<UserService, UserService>();
+            services.AddTransient<IProjectRepository, SqlProjectRepository>();
+            services.AddTransient<ProjectService, ProjectService>();
 
             services.AddMvc(options =>
             {
                 options.Filters.Add(new ApiValidationFilterAttribute());
             });
+            
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AutoMapperProfileConfiguration());
+                cfg.AddProfile(new SqlMapperConfiguraiton());
+            });
+
+            InitializeAutoMapper();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +95,19 @@ namespace KanbanAPI
 
             app.UseMvc();
 
+        }
+
+        private void InitializeAutoMapper()
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<UserDetail, UserEntity>().ReverseMap();
+                cfg.CreateMap<Project, DbProject>().IncludeBase<CoreObject, KanbanEntity>() .ReverseMap();
+                cfg.CreateMap<ProjectStage, DbProjectStage>().ReverseMap();
+                cfg.CreateMap<ProjectTask, DbProjectTask>().ReverseMap();
+                cfg.CreateMap<ProjectViewModel, Project>();
+                cfg.CreateMap<StageViewModel, ProjectStage>();
+            });
         }
     }
 }

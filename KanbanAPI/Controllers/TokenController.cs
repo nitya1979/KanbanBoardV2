@@ -56,7 +56,7 @@ namespace KanbanAPI.Controllers
 			}
 
 
-			return BadRequest(result.Result);
+			return BadRequest(result.Errors);
         }
 
 

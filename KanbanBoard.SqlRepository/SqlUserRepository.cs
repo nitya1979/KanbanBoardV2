@@ -15,13 +15,15 @@ namespace KanbanBoard.SqlRepository
         private readonly RoleManager<KanbanRoles> roleManager;
         private readonly SignInManager<UserEntity> signInManager;
 
-        public SqlUserRepository(UserManager<UserEntity> userManager, RoleManager<KanbanRoles> roleManager, SignInManager<UserEntity> signInManager)
+        public SqlUserRepository(UserManager<UserEntity> userManager, RoleManager<KanbanRoles> roleManager, 
+                                SignInManager<UserEntity> signInManager)
         {
             this.userManager = userManager;
 
             this.roleManager = roleManager;
 
             this.signInManager = signInManager;
+            
         }
 
         public async Task<KanbanResult> ChangePassword(string userName, string currentPassword, string newPassword)
@@ -71,7 +73,7 @@ namespace KanbanBoard.SqlRepository
             {
                 IList<UserEntity> users = null;
 
-                if (!string.IsNullOrEmpty(partialUserName))
+                if (string.IsNullOrEmpty(partialUserName))
                     users = userManager.Users.ToList();
                 else
                     users = userManager.Users.Where(u => u.UserName.Contains(partialUserName)).ToList();
@@ -89,7 +91,7 @@ namespace KanbanBoard.SqlRepository
 
         public async Task<KanbanResult> Login(string userName, string password, string grantType)
         {
-            var user = await this.userManager.FindByEmailAsync(userName);
+            var user = await this.userManager.FindByNameAsync(userName);
 
             if (user != null)
             {
@@ -107,10 +109,9 @@ namespace KanbanBoard.SqlRepository
 
         
 
-        public async Task<KanbanResult> Register(string userName, string password)
+        public async Task<KanbanResult> Register(string userName, string email, string password)
         {
-            var user = new UserEntity { Email = userName, UserName =userName };
-
+            var user = new UserEntity { Email = email, UserName =userName };
 
             IdentityResult result = await userManager.CreateAsync(user,password);
 

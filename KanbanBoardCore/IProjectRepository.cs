@@ -7,9 +7,9 @@ namespace KanbanBoardCore
 {
     public interface IProjectRepository : ITransactable
     {
-        Task<List<Project>> GetAllProjects(string userName);
+        Task<KanbanCollection<Project>> GetAllProjects(string userName);
 
-        Task<List<Project>> GetAllProjects(string userName, DateTime fromDate, DateTime toDate, int pageNo, int count);
+        Task<KanbanCollection<Project>> GetAllProjects(string userName, int pageNo, int count);
 
         Task<List<ProjectStage>> GetAllStages(int projectID);
 

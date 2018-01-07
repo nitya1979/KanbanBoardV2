@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using KanbanAPI.Filters;
-using KanbanAPI.Helper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,12 +30,12 @@ namespace KanbanAPI.Controllers
         {
             KanbanResult result = null;
 
-            result = await _userService.Register(model.Email, model.Password);
+            result = await _userService.Register(model.UserName, model.Email, model.Password);
 
             if (result.Success)
-                return Ok(new ApiOkResponse(null));
+                return Ok();
             else
-                return BadRequest(new ApiBadRequestResponse(result.Errors.ToArray()));
+                return BadRequest(result.Errors.ToArray());
 
 
         }
@@ -49,7 +48,7 @@ namespace KanbanAPI.Controllers
             KanbanResult result = await _userService.GetUserDetails(userName);
 
             if (result.Success)
-                return BadRequest(new ApiBadRequestResponse(new string[] { userName + " already exists." } ));
+                return BadRequest(new string[] { userName + " already exists." } );
             else
                 return Ok();
         }
@@ -64,50 +63,14 @@ namespace KanbanAPI.Controllers
 
             if (result.Success)
             {
-                return Ok(new ApiOkResponse(null));
+                return Ok();
             }
             else
-                return BadRequest(new ApiBadRequestResponse(result.Errors.ToArray()));
-
-        }
-
-        [HttpGet]
-        [Route("userdetail")]
-        public async Task<IActionResult> UserDetail(string userName)
-        {
-            if (!string.IsNullOrEmpty(userName))
-                return BadRequest(KanbanResult.CreateErrorResult(new List<string>() { "Username is not provided." }));
-
-            KanbanResult result = await _userService.GetUserDetails(userName);
-
-            if (result.Success)
-                return Ok(result);
-            else
-                return BadRequest(result);
-        }
-
-        [HttpPost]
-        [Route("updatephone")]
-        public async Task<IActionResult> UpdateContact([FromBody]string phoneno )
-        {
-            KanbanResult result = await _userService.GetUserDetails(this.User.Identity.Name);
-
-            if (result.Success)
-            {
-                UserDetail user = result.Result as UserDetail;
-
-                user.PhoneNo = phoneno;
-
-                result = await _userService.SaveUserDetails(user);
-
-                if (result.Success)
-                    return Ok(result);
-                else
-                    return BadRequest(result);
+            { 
+                return BadRequest(result.Errors.ToArray());
             }
-            else
-                return BadRequest(result);
         }
+
 
         public async Task<IActionResult> UpdateProfile([FromBody]UserDetailModel model)
         {

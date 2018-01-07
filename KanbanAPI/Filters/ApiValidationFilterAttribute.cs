@@ -1,5 +1,4 @@
-﻿using KanbanAPI.Helper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,10 @@ namespace KanbanAPI.Filters
         {
             if(!context.ModelState.IsValid)
             {
-                context.Result = new BadRequestObjectResult(new ApiBadRequestResponse(context.ModelState ));
+                var Errors = context.ModelState.SelectMany(x => x.Value.Errors)
+                                    .Select(x => x.ErrorMessage).ToArray();
+
+                context.Result = new BadRequestObjectResult(Errors);
             }
 
             base.OnActionExecuting(context);

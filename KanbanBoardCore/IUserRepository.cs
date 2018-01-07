@@ -6,7 +6,7 @@ namespace KanbanBoardCore
 {
     public interface IUserRepository
     {
-        Task<KanbanResult> Register(string userName, string password);
+        Task<KanbanResult> Register(string userName, string email, string password );
 
         Task<KanbanResult> ChangePassword(string userName, string currentPassword, string newPassword);
 

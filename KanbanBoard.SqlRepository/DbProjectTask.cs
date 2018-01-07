@@ -8,7 +8,7 @@ using System.Text;
 namespace KanbanBoard.SqlRepository
 {
     [Table("tblProjectTask")]
-    public class ProjectTask : KanbanEntity
+    public class DbProjectTask : KanbanEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,9 +28,8 @@ namespace KanbanBoard.SqlRepository
         public DateTime DueDate { get; set; }
 
         public DateTime CompletionDate { get; set; }
-
         
         [ForeignKey("StageID")]
-        public ProjectStage Stage { get; set; }
+        public DbProjectStage Stage { get; set; }
     }
 }
