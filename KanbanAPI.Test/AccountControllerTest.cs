@@ -1,4 +1,4 @@
-﻿using KanbanAPI.Controllers;
+using KanbanAPI.Controllers;
 using KanbanAPI.ViewModels;
 using KanbanBoard.SqlRepository;
 using KanbanBoardCore;
@@ -22,16 +22,16 @@ namespace KanbanAPI.Test
         public AccountControllerTest()
         {
             var userStoreMock = new Mock<IUserStore<UserEntity>>();
-            var mockUserMgr = new Mock<UserManager<UserEntity>>(userStoreMock.Object,  null, null, null, null, null, null, null, null );
-            
+            var mockUserMgr = new Mock<UserManager<UserEntity>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
+
             mockUserMgr.Setup(mgr => mgr.CreateAsync(It.IsAny<UserEntity>())).Returns(Task.FromResult(IdentityResult.Success));
             mockUserMgr.Setup(mgr => mgr.ChangePasswordAsync(It.IsAny<UserEntity>(), It.IsAny<string>(), It.IsAny<string>()))
                        .Returns(Task.FromResult(IdentityResult.Success));
             mockUserMgr.Setup(mgr => mgr.FindByNameAsync(It.IsAny<string>()))
                        .Returns(Task.FromResult(new UserEntity { UserName = "nityaprakash@gmail.com" }));
-            
+
             var roleStoreMock = new Mock<IRoleStore<KanbanRoles>>();
-            var mockRoleMgr = new Mock<RoleManager<KanbanRoles>>( roleStoreMock.Object, null, null, null, null);
+            var mockRoleMgr = new Mock<RoleManager<KanbanRoles>>(roleStoreMock.Object, null, null, null, null);
 
             var config = new AutoMapper.MapperConfiguration(cfg =>
             {
@@ -39,11 +39,11 @@ namespace KanbanAPI.Test
             });
 
             var sqlUserRepo = new SqlUserRepository(mockUserMgr.Object, mockRoleMgr.Object, null);
-            
+
 
             var userService = new UserService(sqlUserRepo);
-                
-            accountController =  new AccountController(userService);
+
+            accountController = new AccountController(userService);
 
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             {
@@ -51,7 +51,7 @@ namespace KanbanAPI.Test
                 new Claim( ClaimTypes.Name, "nityaprakash@gamil.com")
             }));
 
-            
+
             accountController.ControllerContext = new ControllerContext()
             {
                 HttpContext = new DefaultHttpContext() { User = user },
@@ -102,7 +102,7 @@ namespace KanbanAPI.Test
 
             ////Act
             //sut.OnActionExecuting(context);
-            
+
             //Act
 
         }

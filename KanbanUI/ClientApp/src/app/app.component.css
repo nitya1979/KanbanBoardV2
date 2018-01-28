@@ -1,0 +1,43 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+}
+
+.navbartop{
+    flex-grow: 0;
+}
+
+.mainContainer{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    overflow-y:auto;
+    height: 100%;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    height: 100%;
+}
+
+.navleft {
+    
+    display:flex;
+    flex-direction:column;
+    min-width: 260px;
+    clear:both;
+    height: 100%;
+    background-color: #3F547F;
+    color: #dddddd;
+
+}
+
+
+

@@ -53,7 +53,7 @@ namespace KanbanAPI
             });
 
             
-            services.AddDbContext<ApplicationDbContext>( options => options.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=Kanban_Dev;Integrated Security=True;User ID=sa;Password=e58@t4Ie"));
+            services.AddDbContext<ApplicationDbContext>( options => options.UseSqlServer(@"Data Source=localhost\SQLexpress,1401;Initial Catalog=Kanban_Dev;User ID=sa;Password=e58@t4Ie"));
 
             services.AddIdentity<UserEntity, KanbanRoles>()
             .AddEntityFrameworkStores<ApplicationDbContext>()

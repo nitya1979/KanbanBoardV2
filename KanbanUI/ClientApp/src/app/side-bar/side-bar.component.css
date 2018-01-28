@@ -1,0 +1,15 @@
+.brand {
+    display: flex;
+    flex-grow: 0;
+    background-color: #3F547F !important;
+}
+
+.container-flud {
+    display: flex;
+    flex-grow: 1;
+    padding-top:10px;
+}
+
+a {
+    color: #dddddd;
+}
