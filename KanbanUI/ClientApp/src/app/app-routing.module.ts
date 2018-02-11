@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes} from '@angular/router';
 import { DashBoardComponent } from './dash-board/dash-board.component';
-
+import {AuthGaurdService} from './auth-gaurd.service';
 
 const routes: Routes = [
     {path : 'dashboard',
-    component : DashBoardComponent
+    component : DashBoardComponent,
+    canActivate : [AuthGaurdService]
     },
      {path : '', redirectTo : '/dashboard', pathMatch: 'full'},
-     {path : 'account', loadChildren:'app/account/account.module#AccountModule'},
+     {path : 'account', loadChildren:'app/account/account.module#AccountModule',},
      {
         path : 'projects',
         loadChildren : 'app/project/project.module#ProjectModule'

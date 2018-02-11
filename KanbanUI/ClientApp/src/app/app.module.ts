@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectModule } from './project/project.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { KanbanHttpInterceptor } from './kanban-http-interceptor';
+import {AuthGaurdService} from './auth-gaurd.service';
 
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -45,6 +46,7 @@ import { TaskListComponent } from './task-list/task-list.component';
   ],
 
   providers: [
+    AuthGaurdService,
     ProjectService,
     { 
       provide: HTTP_INTERCEPTORS, 
