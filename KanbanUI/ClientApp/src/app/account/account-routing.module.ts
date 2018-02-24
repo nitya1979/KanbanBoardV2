@@ -6,7 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent} from './profile/profile.component';
 import { ChangePasswordComponent}  from './change-password/change-password.component';
-
+import {AuthGaurdService} from '../auth-gaurd.service';
 const userRoutes: Routes = [
     {
         path : 'register',
@@ -22,7 +22,8 @@ const userRoutes: Routes = [
     },
     {
         path : 'changepassword',
-        component: ChangePasswordComponent
+        component: ChangePasswordComponent,
+        canActivate : [AuthGaurdService]
     },
     {
         path: '',

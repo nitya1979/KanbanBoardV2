@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService} from './Services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  IsAuth = true;
+  authenticationService:AuthenticationService;
   title = 'KanbanBoard';
+
+  constructor(private authService : AuthenticationService)
+  {
+    this.authenticationService = authService;
+  }
 }

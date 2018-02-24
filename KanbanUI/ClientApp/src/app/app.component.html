@@ -2,7 +2,7 @@
     <app-nav-bar></app-nav-bar>
 </div>
 <div class="main">
-    <div class="navleft d-none d-lg-block" *ngIf="IsAuth">
+    <div class="navleft d-none d-lg-block"  *ngIf="authenticationService.isAuthenticated">
     <app-side-bar></app-side-bar>
     </div>
     <div class="mainContainer">

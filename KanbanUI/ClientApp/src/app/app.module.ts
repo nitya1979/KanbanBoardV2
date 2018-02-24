@@ -20,7 +20,7 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 
 import { ProjectService} from './Services/project.service';
 import { TaskListComponent } from './task-list/task-list.component';
-
+import { AuthenticationService } from './Services/authentication.service';
 
 @NgModule({
   imports: [
@@ -51,8 +51,9 @@ import { TaskListComponent } from './task-list/task-list.component';
     { 
       provide: HTTP_INTERCEPTORS, 
       useClass: KanbanHttpInterceptor, 
-      multi: true 
-  } 
+      multi: true
+    } , 
+    AuthenticationService
   ],
   bootstrap: [AppComponent]
 })
