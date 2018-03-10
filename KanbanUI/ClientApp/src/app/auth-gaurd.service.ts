@@ -11,9 +11,8 @@ export class AuthGaurdService implements CanActivate {
   constructor(private router: Router) { }
   
   canActivate(){
-    if(localStorage.getItem("currentUser")){
-     
-      
+    if(localStorage.getItem("access_token")){
+     console.log(localStorage.getItem("access_token"));
       return true; 
 
     }

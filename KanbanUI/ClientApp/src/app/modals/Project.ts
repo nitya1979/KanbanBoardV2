@@ -12,4 +12,8 @@ export class Project{
     EndDate : Date;
     Completion: Date;
     States : TaskStates[];  
+
+    public constructor(init?:Partial<Project>){
+        Object.assign(this,init);
+    }
 }

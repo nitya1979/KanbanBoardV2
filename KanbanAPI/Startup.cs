@@ -30,6 +30,15 @@ namespace KanbanAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddCors(options=>{
+                options.AddPolicy("AllowAllHeaders",
+                                  builder => {
+                                      builder.AllowAnyOrigin()
+                                             .AllowAnyHeader()
+                                             .AllowAnyMethod();
+                });
+            });
+
             services.AddAuthorization(options=>{
                 options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser()
@@ -87,6 +96,7 @@ namespace KanbanAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("AllowAllHeaders");
             app.UseStaticFiles();
 
 

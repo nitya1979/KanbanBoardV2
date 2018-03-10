@@ -1,20 +1,17 @@
 
-<div class="container-flud">
+<ng-container class="container-flud">
     
     <div class="col">
       <div class="text-center">
         <img src="../../assets/images/images.png" width="160px" class="img-responsive rounded-circle" /><br /><br />
       </div>
-        <p><a href="#" [routerLink]="['projects/projectlist']" >Projects</a><a href="#" [routerLink]="['projects/projectdetail']"><span class="fa fa-plus fa-lg pull-right">&nbsp;</span></a> </p>
-            <ul>
-                <li *ngFor="let p of projects">{{p.Name}}</li>
-            </ul>
-            <p>
-                <a href="#" >Tasks</a><a href="#"></a><a href="#"><span class="fa fa-plus fa-lg pull-right">&nbsp;</span></a>
-            </p>
-            <ul>
-               <li *ngFor="let p of projects">{{p.Name}}</li>
-            </ul>
-        </div>
-    
-</div>
+      <mat-nav-list>
+            <ng-container *ngFor="let p of projects">
+                <a  mat-list-item>{{p.Name}}</a>
+                <mat-nav-list style="margin-left:30px;">
+                        <a *ngFor="let p1 of projects" mat-list-item>{{ p1.Name }}</a>
+                </mat-nav-list>
+            </ng-container>
+        </mat-nav-list>
+    </div>
+</ng-container>

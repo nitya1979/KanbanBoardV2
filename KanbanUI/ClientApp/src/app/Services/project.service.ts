@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
+import { HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class ProjectService {
 
-  constructor() { }
+  constructor(private http: HttpClient) {
+
+   }
 
   getAll(){
-
-  return PROJECTS;
+    return PROJECTS;
   }
 
 }

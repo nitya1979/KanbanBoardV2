@@ -1,6 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule} from './app-routing.module';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatMenuModule, MatButtonModule, MatIconModule, MatCardModule , MatToolbarModule, MatSidenavModule,
+MatListModule, MatFormFieldModule, MatDatepickerModule,MatNativeDateModule} from '@angular/material';
+
 import { ChartsModule } from 'ng2-charts';
 import { DnpModule } from '../dnp/dnp.Module';
 import { AccountModule } from './account/account.module';
@@ -21,12 +26,25 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { ProjectService} from './Services/project.service';
 import { TaskListComponent } from './task-list/task-list.component';
 import { AuthenticationService } from './Services/authentication.service';
+import { from } from 'rxjs/observable/from';
+import { httpFactory } from '@angular/http/src/http_module';
+
 
 @NgModule({
   imports: [
     BrowserModule,
+     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ChartsModule,
     DnpModule,
     AccountModule,
@@ -50,7 +68,7 @@ import { AuthenticationService } from './Services/authentication.service';
     ProjectService,
     { 
       provide: HTTP_INTERCEPTORS, 
-      useClass: KanbanHttpInterceptor, 
+      useClass: KanbanHttpInterceptor,
       multi: true
     } , 
     AuthenticationService

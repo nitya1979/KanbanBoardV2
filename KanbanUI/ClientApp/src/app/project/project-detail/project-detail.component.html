@@ -1,3 +1,33 @@
-<p>
-  project-detail Changed Works!
-</p>
+
+      <h3>Project Detail</h3>
+      <hr  />
+      <form novalidate class="form" [formGroup]="projectForm">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Project Name" formControlName = "name">
+            <mat-error>Project name is required</mat-error>
+          </mat-form-field>
+        
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Leave a comment" formControlName="description"></textarea>
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="picker" placeholder="Start Date" formControlName="startDate" (dateChange)="addEvent('change', $event)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>Start Date is required</mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="dueDatePicker" placeholder="Due Date" [min]="dueMin" formControlName="dueDate">
+            <mat-datepicker-toggle  matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #dueDatePicker></mat-datepicker>
+            <mat-error>End Date is required</mat-error>
+          </mat-form-field>
+          
+          <div class="button-row" style="margin-top:50px">
+            <button mat-raised-button  color="primary" type="submit">Save</button>
+            <a mat-raised-button routerLink=".">Cancel</a>
+          </div>
+
+        </form>
+        
