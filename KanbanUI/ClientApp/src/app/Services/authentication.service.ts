@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
@@ -15,8 +15,8 @@ export class AuthenticationService {
         const options = 
     { params: new HttpParams().set('UserName', userName)
                                             .set('password', password)};
-
-     this.http.get("http://localhost:5000/api/token", options).subscribe(
+      console.log(environment.apiBase + "token");
+     this.http.get( environment.apiBase+ "token", options).subscribe(
        res =>{ 
          localStorage.setItem("access_token", res["access_token"]);
          localStorage.setItem("expires_on", res["expires_on"]);

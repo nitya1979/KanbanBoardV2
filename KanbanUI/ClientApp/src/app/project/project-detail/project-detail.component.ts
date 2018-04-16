@@ -13,6 +13,7 @@ export class ProjectDetailComponent implements OnInit {
   projectForm:FormGroup ;
   project:Project;
   dueMin:Date;
+
   constructor() { }
   
   ngOnInit() {
