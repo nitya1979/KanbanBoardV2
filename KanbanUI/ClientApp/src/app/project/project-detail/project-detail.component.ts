@@ -37,6 +37,18 @@ export class ProjectDetailComponent implements OnInit {
 
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
      this.dueMin =new Date( event.value);
+     
   }
 
+  save()
+  {
+    if( this.projectForm.valid)
+    {
+        this.project.Name = this.projectForm.controls['name'].value;
+        this.project.Description = this.projectForm.controls['description'].value;
+        this.project.StartDate = this.projectForm.controls['startDate'].value;
+        this.project.EndDate = this.projectForm.controls['dueDate'].value;
+    }
+    
+  }
 }

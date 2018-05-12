@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
+import {Project} from '../modals/Project';
 
 @Injectable()
 export class ProjectService {
@@ -12,6 +13,11 @@ export class ProjectService {
     return PROJECTS;
   }
 
+  save(project:Project){
+
+    
+      
+  }
 }
 
 const PROJECTS = [{
