@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {FormControl, FormGroup, Validators,FormBuilder} from '@angular/forms';
 import { AuthenticationService} from '../../Services/authentication.service';
+
 
 @Component({
   templateUrl: './login.component.html',

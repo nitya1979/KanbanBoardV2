@@ -1,38 +1,20 @@
 <div class="col-md-12">
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Login</h4>
+<h3>login</h3>
+<hr />
+<form novalidate class="form" (ngSubmit)="login()">
+    <mat-form-field class="full-width">
+        <input matInput type="email" id="inputEmail3" placeholder="Email">
+        <mat-error>Email is requied</mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <input matInput type="password" placeholder="Password">
+        <mat-error>Password is required</mat-error>
+    </mat-form-field>
 
-        </div>
-        <div class="card-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> Remember me
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-info" (click)="login()" >Sign in</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+    <mat-checkbox>Disable select</mat-checkbox>
+
+    <div class="button-row" style="margin-top:50px">
+        <button mat-raised-button  color="primary" type="submit">Sign In</button>
     </div>
+</form>
 </div>

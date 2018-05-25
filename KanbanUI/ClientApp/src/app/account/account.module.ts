@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import{MatCardModule,MatFormFieldModule, MatInputModule, MatDatepickerModule, MatButtonModule, MatCheckboxModule} from '@angular/material';
 
 import { AccountRoutingModule} from './account-routing.module';
 import {RegisterComponent} from './register/register.component';
@@ -13,7 +14,13 @@ import { ChangePasswordComponent}  from './change-password/change-password.compo
   imports: [
     CommonModule,
     FormsModule,
-    AccountRoutingModule
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule, 
+    AccountRoutingModule,
+    MatButtonModule,
+    MatCheckboxModule
   ],
 
   declarations: [
@@ -26,7 +33,8 @@ import { ChangePasswordComponent}  from './change-password/change-password.compo
   exports: [
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChangePasswordComponent
   ]
  
 })

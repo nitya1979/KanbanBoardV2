@@ -1,10 +1,19 @@
 <div class="navbartop">
-    <app-nav-bar></app-nav-bar>
+        <mat-toolbar>
+                <mat-toolbar-row>
+                    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+                    <h1 class="example-app-name">KanbanBoard</h1>
+                  <button mat-button >Projects</button>
+                </mat-toolbar-row>
+              </mat-toolbar>
 </div>
 <mat-sidenav-container class="main">
-    <mat-sidenav mode="side" class="navleft"  opened *ngIf="authenticationService.isAuthenticated">
+
+    <mat-sidenav #snav mode="side" class="navleft" opened="true" 
+    [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
         <app-side-bar></app-side-bar>
     </mat-sidenav>
+
     <mat-sidenav-content class="mainContainer">
         <app-container></app-container>
         <app-footer></app-footer>

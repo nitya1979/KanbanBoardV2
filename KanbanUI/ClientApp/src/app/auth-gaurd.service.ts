@@ -12,9 +12,10 @@ export class AuthGaurdService implements CanActivate {
   
   canActivate(){
     if(localStorage.getItem("access_token")){
-     console.log(localStorage.getItem("access_token"));
-      return true; 
-
+      let expiresOn = new Date(localStorage.getItem("expires_on"));
+      let dateNow = new Date();
+      if( expiresOn >= dateNow)
+       return true;
     }
 
     console.log("Test");

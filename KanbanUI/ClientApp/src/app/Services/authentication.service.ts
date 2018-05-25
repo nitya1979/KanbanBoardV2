@@ -12,6 +12,7 @@ export class AuthenticationService {
     Login(userName, password){
      userName = 'nityaprakash';
      password = 'e58@t4Ie';
+     console.log( userName + " "+ password);
         const options = 
     { params: new HttpParams().set('UserName', userName)
                                             .set('password', password)};

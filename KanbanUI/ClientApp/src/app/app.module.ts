@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule} from './app-routing.module';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {LayoutModule} from '@angular/cdk/layout'; 
 import {MatMenuModule, MatButtonModule, MatIconModule, MatCardModule , MatToolbarModule, MatSidenavModule,
-MatListModule, MatFormFieldModule, MatDatepickerModule,MatNativeDateModule} from '@angular/material';
+MatListModule, MatFormFieldModule, MatDatepickerModule,MatNativeDateModule, MatCheckboxModule} from '@angular/material';
 
 import { ChartsModule } from 'ng2-charts';
 import { DnpModule } from '../dnp/dnp.Module';
@@ -45,11 +46,13 @@ import { httpFactory } from '@angular/http/src/http_module';
     MatListModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCheckboxModule,
     ChartsModule,
     DnpModule,
     AccountModule,
     NgbModule.forRoot(),
-    ProjectModule
+    ProjectModule,
+    LayoutModule
   ],
 
   declarations: [

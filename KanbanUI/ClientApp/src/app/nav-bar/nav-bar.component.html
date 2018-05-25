@@ -1,6 +1,7 @@
 <mat-toolbar>
   <mat-toolbar-row>
-    <span>Kanban Board</span>
-    <button mat-button >Projects</button>
+      <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+      <h1 class="example-app-name">KanbanBoard</h1>
+    <button mat-button (click)="snav.toggle()" >Projects</button>
   </mat-toolbar-row>
 </mat-toolbar>
