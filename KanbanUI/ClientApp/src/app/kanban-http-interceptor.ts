@@ -4,13 +4,17 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/throw'
 import 'rxjs/add/operator/catch';
 import { error } from 'selenium-webdriver';
+import { AuthenticationService } from './Services/authentication.service';
 
 @Injectable()
 export class KanbanHttpInterceptor implements HttpInterceptor {
+
+    constructor(private authService: AuthenticationService){}
+    
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         
         console.log("intercepted request ... ");
-        var token =  localStorage.getItem("access_token");
+        var token =  this.authService.accessToken;
         // Clone the request to add the new header.
         if( token)
         {

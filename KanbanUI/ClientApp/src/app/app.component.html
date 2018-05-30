@@ -9,7 +9,7 @@
 </div>
 <mat-sidenav-container class="main">
 
-    <mat-sidenav #snav mode="side" class="navleft" opened="true" 
+    <mat-sidenav #snav mode="side" class="navleft" opened="mobileQuery.matches ? false : true" 
     [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
         <app-side-bar></app-side-bar>
     </mat-sidenav>

@@ -1,20 +1,25 @@
 <div class="col-md-12">
 <h3>login</h3>
 <hr />
-<form novalidate class="form" (ngSubmit)="login()">
+
+<form novalidate class="form" #loginForm="ngForm" (ngSubmit)="login()">
+    <div class="alert alert-danger" role="alert" *ngIf="loginError">
+            {{errorMessage}}
+        </div>
     <mat-form-field class="full-width">
-        <input matInput type="email" id="inputEmail3" placeholder="Email">
-        <mat-error>Email is requied</mat-error>
+        <input matInput type="text" id="uname" name="uname" [(ngModel)]="userName" placeholder="User Name" required #uname="ngModel">
+        <mat-error *ngIf="uname.hasError('required')">User Name is requied</mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
-        <input matInput type="password" placeholder="Password">
-        <mat-error>Password is required</mat-error>
+        <input matInput type="password" id="pname" name="pname" [(ngModel)]="password" placeholder="Password" required #pname="ngModel">
+        <mat-error *ngIf="pname.hasError('required')">Password is required</mat-error>
     </mat-form-field>
 
-    <mat-checkbox>Disable select</mat-checkbox>
+    <mat-checkbox [(ngModel)]="remember" id="prem" name="prem" #prem="ngModel" >Remember Me</mat-checkbox>
 
     <div class="button-row" style="margin-top:50px">
-        <button mat-raised-button  color="primary" type="submit">Sign In</button>
+        <button mat-raised-button  color="primary" type="submit" [disabled]="loginForm.invalid">Sign In</button>
     </div>
+
 </form>
 </div>

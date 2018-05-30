@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators,FormBuilder} from '@angular/forms';
 import { AuthenticationService} from '../../Services/authentication.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,8 +12,11 @@ import { AuthenticationService} from '../../Services/authentication.service';
 export class LoginComponent implements OnInit {
  userName:string;
  password:string;
-
-  constructor(private authService : AuthenticationService) {
+ remember:boolean = true;
+ loginError: boolean = false;
+ errorMessage : string;
+ 
+  constructor(private authService : AuthenticationService,private router: Router ) {
     
    }
 
@@ -20,7 +24,16 @@ export class LoginComponent implements OnInit {
   }
   
   login(){
-    this.authService.Login(this.userName, this.password);
-    console.log(localStorage.getItem("access_token"));
+    this.loginError = false;
+    this.errorMessage = "";
+    
+    this.authService.Login(this.userName, this.password, this.remember).subscribe(
+      respsone => {
+        if( respsone == "success"){
+          this.router.navigate(['/dashboard']);
+        }  
+      },
+      error => { this.loginError = true, this.errorMessage = error;});
+    //console.log(localStorage.getItem("access_token"));
   }
 }

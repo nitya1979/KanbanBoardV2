@@ -35,6 +35,11 @@ namespace KanbanBoardCore
             return _userRepository.GetUserDetail(userName);
         }
 
+		public Task<KanbanResult> GetUserDetailByEmail( string email)
+		{
+			return _userRepository.GetUserByEmail(email);
+		}
+
         public Task<KanbanResult> SaveUserDetails(UserDetail userDetail)
         {
             return _userRepository.SaveUserDetail(userDetail);

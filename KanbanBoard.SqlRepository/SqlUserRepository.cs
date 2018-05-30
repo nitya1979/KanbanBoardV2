@@ -44,7 +44,30 @@ namespace KanbanBoard.SqlRepository
    
         }
 
-        public async Task<KanbanResult> GetUserDetail(string userName)
+		public async Task<KanbanResult> GetUserByEmail(string email)
+		{
+			var user = await userManager.FindByEmailAsync(email);
+
+			if( user != null)
+			{
+				core.UserDetail userDetail = new core.UserDetail
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    PhoneNo = user.PhoneNumber,
+                    ImageUrl = user.ImageUrl,
+                    AboutMe = user.AboutMe
+                };
+
+                return KanbanResult.CreateOkResult(userDetail);
+			}
+			else
+			{
+				return KanbanResult.CreateErrorResult(new List<string> { "User not found" });
+			}
+		}
+
+		public async Task<KanbanResult> GetUserDetail(string userName)
         {
             var user = await userManager.FindByNameAsync(userName);
 
@@ -66,6 +89,7 @@ namespace KanbanBoard.SqlRepository
                 return KanbanResult.CreateErrorResult(new List<string> { "User not found" });
             
         }
+
 
         public Task<List<UserDetail>> GetUsers(string partialUserName)
         {

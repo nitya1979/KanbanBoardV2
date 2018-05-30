@@ -15,6 +15,7 @@ import { ProjectModule } from './project/project.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { KanbanHttpInterceptor } from './kanban-http-interceptor';
 import {AuthGaurdService} from './auth-gaurd.service';
+import {AccountService} from './Services/account.service';
 
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -29,6 +30,8 @@ import { TaskListComponent } from './task-list/task-list.component';
 import { AuthenticationService } from './Services/authentication.service';
 import { from } from 'rxjs/observable/from';
 import { httpFactory } from '@angular/http/src/http_module';
+import { CompareValidadatorDirective } from './directives/compare-validadator.directive';
+import { KanbanService } from './Services/kanban.service';
 
 
 @NgModule({
@@ -63,10 +66,12 @@ import { httpFactory } from '@angular/http/src/http_module';
     ContainerComponent,
     DashBoardComponent,
     ProjectOverviewComponent,
-    TaskListComponent
+    TaskListComponent,
+    CompareValidadatorDirective
   ],
 
   providers: [
+    KanbanService,
     AuthGaurdService,
     ProjectService,
     { 
@@ -74,7 +79,8 @@ import { httpFactory } from '@angular/http/src/http_module';
       useClass: KanbanHttpInterceptor,
       multi: true
     } , 
-    AuthenticationService
+    AuthenticationService,
+    AccountService
   ],
   bootstrap: [AppComponent]
 })

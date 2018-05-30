@@ -1,43 +1,73 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
+import { Token } from '@angular/compiler';
+import {Observable} from 'rxjs';
+import {_throw } from 'rxjs/observable/throw';
+import { catchError, retry } from 'rxjs/operators';
+import { KanbanService } from './kanban.service';
 
 @Injectable()
-export class AuthenticationService {
-
+export class AuthenticationService extends KanbanService {
+  private TOKEN_KEY:string = "access_token";
+  private EXIPRE_ON_KEY: string = "expires_on";
 
   constructor(private http: HttpClient) {
+     super();
    }
 
-    Login(userName, password){
-     userName = 'nityaprakash';
-     password = 'e58@t4Ie';
-     console.log( userName + " "+ password);
-        const options = 
-    { params: new HttpParams().set('UserName', userName)
-                                            .set('password', password)};
-      console.log(environment.apiBase + "token");
-     this.http.get( environment.apiBase+ "token", options).subscribe(
+    Login(userName:string, password:string, remember:boolean){
+     
+       const options ={ params: new HttpParams().set('UserName', userName).set('password', password)};
+
+       return this.http.get( environment.apiBase+ "token", options).map(
        res =>{ 
-         localStorage.setItem("access_token", res["access_token"]);
-         localStorage.setItem("expires_on", res["expires_on"]);
         
-       },
-       msg => console.error(`Error: ${msg.status} ${msg.statusText}`)
-       
+         localStorage.clear();
+         sessionStorage.clear();
+
+         if( remember == true){
+
+            localStorage.setItem(this.TOKEN_KEY, res["access_token"]);
+            localStorage.setItem(this.EXIPRE_ON_KEY, res["expires_on"]);
+         }else{
+            sessionStorage.setItem(this.TOKEN_KEY, res["access_token"]);
+            sessionStorage.setItem(this.EXIPRE_ON_KEY, res["expires_on"]);
+        }
+
+        return  "success";
+       }
+     ).pipe(
+       catchError(this.handleError)
      );
    }
 
-   get isAuthenticated(){
-     if(localStorage.getItem("access_token")){
-       let expiresOn = new Date(localStorage.getItem("expires_on"));
-       let dateNow = new Date();
-       if( expiresOn < dateNow)
-        return false;
-      else
-        return true;
-     }
-    else
+   get accessToken() { 
+    if( sessionStorage.getItem(this.TOKEN_KEY)){
+      return sessionStorage.getItem(this.TOKEN_KEY);
+    }else{
+      return localStorage.getItem(this.TOKEN_KEY);
+    }
+  }
+
+  get expiresOn() {
+    if( sessionStorage.getItem(this.EXIPRE_ON_KEY)){
+      return sessionStorage.getItem(this.EXIPRE_ON_KEY);
+    }else{
+      return localStorage.getItem(this.EXIPRE_ON_KEY);
+    }
+  }
+
+  get isAuthenticated(){
+    if(this.accessToken){
+      let expiresOn = new Date(this.expiresOn);
+      let dateNow = new Date();
+      if( expiresOn < dateNow)
       return false;
-   }
+    else
+      return true;
+    }
+  else
+    return false;
+  }
 }

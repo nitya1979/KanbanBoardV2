@@ -16,6 +16,8 @@ namespace KanbanBoardCore
 
         Task<KanbanResult> SaveUserDetail(UserDetail userDetail);
 
+		Task<KanbanResult> GetUserByEmail(string email);
+
         Task<List<UserDetail>> GetUsers(string partialUserName);
     }
 }

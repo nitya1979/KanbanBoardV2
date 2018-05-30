@@ -20,7 +20,8 @@ import { ChangePasswordComponent}  from './change-password/change-password.compo
     MatInputModule, 
     AccountRoutingModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ReactiveFormsModule
   ],
 
   declarations: [

@@ -1,33 +1,29 @@
-<div class="panel col-md-8 col-md-offset-2">
-    <div class="panel-heading">
-        <p class="panel-title">Register</p>
+<h3>Register</h3>
 
+<form [formGroup]="registerForm" novalidate class="form" (ngSubmit)="register()">
+    <mat-form-field class="full-width">
+        <input matInput type="text" formControlName="userName" name="userName" placeholder="UserName" (blur)="validateUser()" >
+        <mat-error *ngIf="userName.hasError('required')">Please enter UserName</mat-error>
+        <mat-error *ngIf="userNameExists">This userName already taken. Pleae enter other value</mat-error>
+    </mat-form-field>
+        
+    <mat-form-field class="full-width">
+        <input matInput type="email" formControlName="email" name="email"  placeholder="Email" (blur)="validateEmail()">
+        <mat-error *ngIf="email.hasError('required')">Email is Required</mat-error>
+        <mat-error *ngIf="email.hasError('email')">Invalid Email</mat-error>
+        <mat-error *ngIf="emailExists">This email is already in use. Please enter other value</mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <input matInput type="password" formControlName="password" name="password" placeholder="Password">
+        <mat-error *ngIf="password.hasError('required')">Password is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <input matInput type="password" formControlName="retypePassword" name="retypePassword" placeholder="Retype Password">
+        <mat-error *ngIf="retypePassword.hasError('required')">Retype Password is required</mat-error>
+        <mat-error *ngIf="retypePassword.hasError('retype')">Retype Password is not matching</mat-error>
+    </mat-form-field>
+    <div class="button-row" style="margin-top:50px">
+        <button mat-raised-button  color="primary" type="submit" [disabled]="!registerForm.valid" >Sign Up</button>
+        <a mat-raised-button routerLink=".">Cancel</a>
     </div>
-    <div class="panel-body">
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label for="email" class="col-sm-2 control-label">Email</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="email" placeholder="Email">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="confirmPassword" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-success">Sign Up</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+</form>

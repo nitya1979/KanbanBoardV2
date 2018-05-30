@@ -53,6 +53,19 @@ namespace KanbanAPI.Controllers
                 return Ok();
         }
 
+		[AllowAnonymous]
+        [HttpGet]
+        [Route("validateemail/{email}")]
+		public async Task<IActionResult> ValidateEmail( string email)
+		{
+			KanbanResult result = await _userService.GetUserDetailByEmail(email);
+
+			if (result.Success)
+				return BadRequest(new string[] { email + " already exists." });
+			else
+				return Ok();
+		}
+
         [HttpPost]
         [Route("changepassword")]
         public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordModel model)
