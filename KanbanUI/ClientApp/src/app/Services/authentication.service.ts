@@ -11,6 +11,8 @@ import { KanbanService } from './kanban.service';
 export class AuthenticationService extends KanbanService {
   private TOKEN_KEY:string = "access_token";
   private EXIPRE_ON_KEY: string = "expires_on";
+  private USER_NM_KEY: string = "fullName";
+  private EMAIL_KEY : string = "email";
 
   constructor(private http: HttpClient) {
      super();
@@ -27,10 +29,13 @@ export class AuthenticationService extends KanbanService {
          sessionStorage.clear();
 
          if( remember == true){
-
+            localStorage.setItem(this.USER_NM_KEY, res[this.USER_NM_KEY]);
+            localStorage.setItem(this.EMAIL_KEY, res[ this.EMAIL_KEY]);
             localStorage.setItem(this.TOKEN_KEY, res["access_token"]);
             localStorage.setItem(this.EXIPRE_ON_KEY, res["expires_on"]);
          }else{
+            sessionStorage.setItem(this.USER_NM_KEY, res[this.USER_NM_KEY]);
+            sessionStorage.setItem(this.EMAIL_KEY, res[ this.EMAIL_KEY]);
             sessionStorage.setItem(this.TOKEN_KEY, res["access_token"]);
             sessionStorage.setItem(this.EXIPRE_ON_KEY, res["expires_on"]);
         }
@@ -42,6 +47,21 @@ export class AuthenticationService extends KanbanService {
      );
    }
 
+   get userName(){ 
+    if( sessionStorage.getItem(this.USER_NM_KEY)){
+      return sessionStorage.getItem(this.USER_NM_KEY);
+    }else{
+      return localStorage.getItem(this.USER_NM_KEY);
+    }
+   }
+
+   get email(){
+    if( sessionStorage.getItem(this.EMAIL_KEY)){
+      return sessionStorage.getItem(this.EMAIL_KEY);
+    }else{
+      return localStorage.getItem(this.EMAIL_KEY);
+    }
+   }
    get accessToken() { 
     if( sessionStorage.getItem(this.TOKEN_KEY)){
       return sessionStorage.getItem(this.TOKEN_KEY);

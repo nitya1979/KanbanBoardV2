@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../Services/project.service';
-
+import {AuthenticationService} from '../Services/authentication.service'
 
 @Component({
   selector: 'app-side-bar',
@@ -10,15 +10,22 @@ import { ProjectService } from '../Services/project.service';
 export class SideBarComponent implements OnInit {
 
   projects:any;
+  userEmail: string;
 
   show:boolean = true;
 
-  constructor(private projectService: ProjectService) { 
+  constructor(private projectService: ProjectService, private authService: AuthenticationService) { 
 
-    this.projects = this.projectService.getAll();
+
   }
 
   ngOnInit() {
+
+    this.projects = this.projectService.getAll();
+    
+    this.userEmail = this.authService.email;
+
+
   }
 
 }

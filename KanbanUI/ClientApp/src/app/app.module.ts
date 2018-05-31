@@ -6,6 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LayoutModule} from '@angular/cdk/layout'; 
 import {MatMenuModule, MatButtonModule, MatIconModule, MatCardModule , MatToolbarModule, MatSidenavModule,
 MatListModule, MatFormFieldModule, MatDatepickerModule,MatNativeDateModule, MatCheckboxModule} from '@angular/material';
+import {GravatarModule} from 'ngx-gravatar';
 
 import { ChartsModule } from 'ng2-charts';
 import { DnpModule } from '../dnp/dnp.Module';
@@ -55,7 +56,8 @@ import { KanbanService } from './Services/kanban.service';
     AccountModule,
     NgbModule.forRoot(),
     ProjectModule,
-    LayoutModule
+    LayoutModule,
+    GravatarModule
   ],
 
   declarations: [

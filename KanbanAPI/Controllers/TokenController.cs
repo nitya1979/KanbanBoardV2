@@ -32,6 +32,7 @@ namespace KanbanAPI.Controllers
 
             if (result.Success)
 			{
+				var userDetail = (await _userService.GetUserDetails(username)).Result as UserDetail;
 
 					var claims = new[]
 					{
@@ -50,7 +51,10 @@ namespace KanbanAPI.Controllers
                             						  expires: DateTime.Now.AddDays(15),
                             						  signingCredentials: creds);
                     
-                    return Ok(new { access_token = new JwtSecurityTokenHandler().WriteToken(token), expires_on=DateTime.Now.AddDays(15) });
+                    return Ok(new { access_token = new JwtSecurityTokenHandler().WriteToken(token), 
+					                expires_on=DateTime.Now.AddDays(15), 
+					                fullName = userDetail.UserName,
+					                email = userDetail.Email });
 
 				
 			}
