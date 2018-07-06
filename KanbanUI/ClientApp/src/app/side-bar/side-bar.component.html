@@ -7,7 +7,7 @@
       </div>
       <mat-nav-list>
             <ng-container *ngFor="let p of projects">
-                <a  mat-list-item>{{p.Name}}</a>
+                <a  mat-list-item [title]="p.Name">{{p.Name}}</a>
             </ng-container>
         </mat-nav-list>
     </div>

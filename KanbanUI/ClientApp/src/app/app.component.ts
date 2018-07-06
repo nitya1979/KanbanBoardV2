@@ -1,5 +1,5 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { AuthenticationService} from './Services/authentication.service';
 
 
@@ -8,10 +8,10 @@ import { AuthenticationService} from './Services/authentication.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  authenticationService:AuthenticationService;
+export class AppComponent implements OnInit {
   title = 'KanbanBoard';
   mobileQuery: MediaQueryList;
+  userEmail: string = "";
 
   private _mobileQueryListener: () => void;
 
@@ -20,11 +20,15 @@ export class AppComponent {
     this.mobileQuery = media.matchMedia('(max-width: 900px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    this.authenticationService = authService;
+
   }
 
+  ngOnInit(){
+    this.userEmail = this.authService.email;
+  }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+
   }
 
 }

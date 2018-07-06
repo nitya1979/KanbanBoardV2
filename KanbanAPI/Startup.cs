@@ -38,13 +38,13 @@ namespace KanbanAPI
                                              .AllowAnyMethod();
                 });
             });
-
+            
             services.AddAuthorization(options=>{
                 options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser()
                     .Build();
             });
-
+            
             services.AddAuthentication(o=>{
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -98,7 +98,7 @@ namespace KanbanAPI
 
             app.UseCors("AllowAllHeaders");
             app.UseStaticFiles();
-
+            
 
             app.UseAuthentication();
 

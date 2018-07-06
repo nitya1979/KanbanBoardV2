@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using KanbanAPI.Filters;
+using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -45,6 +46,11 @@ namespace KanbanAPI.Controllers
         [Route("validateuser/{userName}")]
         public async Task<IActionResult> ValidateUser(string userName)
         {
+			foreach( var header in this.Request.Headers)
+			{
+				Console.WriteLine( header.Key + " | "+  header.Value);
+			}
+
             KanbanResult result = await _userService.GetUserDetails(userName);
 
             if (result.Success)
