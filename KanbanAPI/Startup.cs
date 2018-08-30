@@ -13,6 +13,10 @@ using KanbanBoardCore;
 using KanbanAPI.Filters;
 using AutoMapper;
 using KanbanAPI.ViewModels;
+using System.Collections.Generic;
+using System;
+using Microsoft.Extensions.Logging;
+using Serilog.Extensions.Logging;
 
 namespace KanbanAPI
 {
@@ -29,6 +33,7 @@ namespace KanbanAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddMvc();
             services.AddCors(options=>{
                 options.AddPolicy("AllowAllHeaders",
@@ -62,7 +67,7 @@ namespace KanbanAPI
             });
 
             
-            services.AddDbContext<ApplicationDbContext>( options => options.UseSqlServer(@"Data Source=localhost\SQLexpress,1401;Initial Catalog=Kanban_Dev;User ID=sa;Password=e58@t4Ie"));
+            services.AddDbContext<ApplicationDbContext>( options => options.UseSqlServer(@"Data Source=localhost\SQLexpress,1433;Initial Catalog=Kanban_Dev;User ID=sa;Password=e58@t4Ie"));
 
             services.AddIdentity<UserEntity, KanbanRoles>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -75,7 +80,9 @@ namespace KanbanAPI
 
             services.AddMvc(options =>
             {
+                options.Filters.Add(new KanbanExceptionFilterAttribute());
                 options.Filters.Add(new ApiValidationFilterAttribute());
+              
             });
             
             var config = new AutoMapper.MapperConfiguration(cfg =>
@@ -91,9 +98,12 @@ namespace KanbanAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
             }
 
             app.UseCors("AllowAllHeaders");
@@ -102,8 +112,9 @@ namespace KanbanAPI
 
             app.UseAuthentication();
 
-
             app.UseMvc();
+
+
 
         }
 
@@ -117,6 +128,7 @@ namespace KanbanAPI
                 cfg.CreateMap<ProjectTask, DbProjectTask>().ReverseMap();
                 cfg.CreateMap<ProjectViewModel, Project>();
                 cfg.CreateMap<StageViewModel, ProjectStage>();
+                cfg.CreateMap<UserDetailModel, UserDetail>().ReverseMap();
             });
         }
     }

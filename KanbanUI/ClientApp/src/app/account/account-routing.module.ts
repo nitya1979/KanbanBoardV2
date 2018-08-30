@@ -18,7 +18,8 @@ const userRoutes: Routes = [
     },
     {
         path : 'profile',
-        component : ProfileComponent
+        component : ProfileComponent,
+        canActivate : [AuthGaurdService]
     },
     {
         path : 'changepassword',

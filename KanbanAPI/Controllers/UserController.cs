@@ -7,14 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 using KanbanBoardCore;
 using KanbanAPI.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace KanbanAPI.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     [Route("api/Users")]
-    public class UserController : Controller
+    public class UserController : KanbanController
     {
         UserService _userService = null;
+
 
         public UserController(UserService userService)
         {
@@ -50,16 +56,15 @@ namespace KanbanAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]UserDetailModel model)
         {
+            throw new Exception("Some random error");
+            Log.Information("api/User/Post");
             var userDetail = Mapper.Map<UserDetail>(model);
             userDetail.UserName = User.Identity.Name;
-            userDetail.Email = User.Identity.Name;
 
             var result = await _userService.SaveUserDetails(userDetail);
 
-            if (result.Success)
-                return Ok();
-            else
-                return BadRequest(result.Errors.ToArray());
+            return this.GetResult(result);
+
         }
                 
         // DELETE: api/ApiWithActions/5

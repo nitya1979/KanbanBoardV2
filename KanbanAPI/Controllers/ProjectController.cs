@@ -9,6 +9,7 @@ using KanbanAPI.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Net.Http;
 
 namespace KanbanAPI.Controllers
 {
@@ -31,6 +32,8 @@ namespace KanbanAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Get(string userName, int pageNo = 0, int count=0)
         {
+         
+
             KanbanCollection<Project> projects = null;
 
             if (pageNo == 0 || count == 0)

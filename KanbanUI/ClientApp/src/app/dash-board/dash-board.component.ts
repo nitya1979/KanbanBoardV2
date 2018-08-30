@@ -1,3 +1,4 @@
+import {NgModule} from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../Services/project.service';
 

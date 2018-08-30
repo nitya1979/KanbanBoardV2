@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { KanbanService } from './kanban.service';
+import { UserDetail } from '../modals/User';
 
 @Injectable()
 export class AccountService extends KanbanService{
@@ -44,5 +45,27 @@ export class AccountService extends KanbanService{
                 );
    }
    
+   getUserDetail(userName:string):Observable<UserDetail>{
+
+    return this.httpClient.get(environment.apiBase+"users/"+userName)
+            .pipe(
+              catchError(this.handleError)
+            ).map( r => {
+               return new UserDetail({
+                 UserId : r.userName,
+                 UserName : r.userName,
+                 Email : r.email,
+                 PhoneNo : r.phoneNo
+               });
+              });
+   }
+
+   updateProfile(user:UserDetail):Observable<any>{
+
+    return this.httpClient.post(environment.apiBase + "users", user)
+                          .pipe(
+                            catchError(this.handleError)
+                          );
+   }
    
 }

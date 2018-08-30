@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule} from './app-routing.module';
+import { CoreModule } from './core/core.module';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LayoutModule} from '@angular/cdk/layout'; 
@@ -9,7 +10,6 @@ MatListModule, MatFormFieldModule, MatDatepickerModule,MatNativeDateModule, MatC
 import {GravatarModule} from 'ngx-gravatar';
 
 import { ChartsModule } from 'ng2-charts';
-import { DnpModule } from '../dnp/dnp.Module';
 import { AccountModule } from './account/account.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectModule } from './project/project.module';
@@ -35,11 +35,14 @@ import { CompareValidadatorDirective } from './directives/compare-validadator.di
 import { KanbanService } from './Services/kanban.service';
 
 
+
+
 @NgModule({
   imports: [
     BrowserModule,
      BrowserAnimationsModule,
     AppRoutingModule,
+    CoreModule,
     HttpClientModule,
     MatMenuModule,
     MatButtonModule,
@@ -52,7 +55,6 @@ import { KanbanService } from './Services/kanban.service';
     MatNativeDateModule,
     MatCheckboxModule,
     ChartsModule,
-    DnpModule,
     AccountModule,
     NgbModule.forRoot(),
     ProjectModule,

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes} from '@angular/router';
 import { DashBoardComponent } from './dash-board/dash-board.component';
 import {AuthGaurdService} from './auth-gaurd.service';
+import { unescapeHtml } from '../../node_modules/@angular/platform-browser/src/browser/transfer_state';
 
 const routes: Routes = [
     {path : 'dashboard',

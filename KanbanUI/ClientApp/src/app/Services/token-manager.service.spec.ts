@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { TokanenManagerService } from './tokanen-manager.service';
+import { TokanenManagerService } from './token-manager.service';
 
 describe('TokanenManagerService', () => {
   beforeEach(() => {

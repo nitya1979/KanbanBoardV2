@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import {FormControl, FormGroup, Validators,FormBuilder} from '@angular/forms';
 import { AuthenticationService} from '../../Services/authentication.service';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnChanges {
  userName:string;
  password:string;
  remember:boolean = true;
@@ -21,8 +21,12 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit() {
+    console.log("Intialized");
   }
   
+  ngOnChanges(){
+    console.log("changing ");
+  }
   login(){
     this.loginError = false;
     this.errorMessage = "";
