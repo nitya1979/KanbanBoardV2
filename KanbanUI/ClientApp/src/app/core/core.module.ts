@@ -1,17 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from './alert/alert.component';
+import {MatButtonModule, MatDialogModule} from '@angular/material';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { CanComponentDeactivate } from './Services/CanComponentDeactivate';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   declarations: [
-    AlertComponent
+    AlertComponent,
+    ConfirmDialogComponent
   ],
 
+  providers:[CanComponentDeactivate],
+
   exports:[
-    AlertComponent
-  ]
+    AlertComponent,
+    ConfirmDialogComponent
+  ],
+  entryComponents:[ ConfirmDialogComponent]
 })
 export class CoreModule { }

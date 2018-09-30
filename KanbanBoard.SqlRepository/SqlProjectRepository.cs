@@ -129,17 +129,27 @@ namespace KanbanBoard.SqlRepository
         {
             return Task.Factory.StartNew(() =>
             {
-                DbProject dbProject = Mapper.Map<DbProject>(project);
+                DbProject dbProject = null;
 
                 if (project.ProjectID == 0)
                 {
+                    dbProject = Mapper.Map<DbProject>(project);
                     dbProject.CreateDate = DateTime.Now;
                     _dbContext.Project.Add(dbProject);
                 }
                 else
                 {
+                    dbProject = _dbContext.Project.Where(p => p.ProjectID == project.ProjectID).FirstOrDefault();
+
                     dbProject.ModifyDate = DateTime.Now;
-                    _dbContext.Entry<DbProject>(dbProject).State = EntityState.Modified;
+                    dbProject.ModifiedBy = project.ModifiedBy;
+                    dbProject.ProjectName = project.ProjectName;
+                    dbProject.Description = project.Description;
+                    dbProject.StartDate = project.StartDate;
+                    dbProject.DueDate = project.DueDate;
+                    dbProject.CompletionDate = project.CompletionDate;
+
+                    _dbContext.Update(dbProject);//.State = EntityState.Modified;
                 }
 
                 _dbContext.SaveChanges(true);

@@ -5,11 +5,11 @@
 }
 
 export class Project{
-    ID : number;
-    Name : string;
+    ProjectID : number;
+    ProjectName : string;
     Description: string;
     StartDate : Date;
-    EndDate : Date;
+    DueDate : Date;
     Completion: Date;
     States : TaskStates[];  
 

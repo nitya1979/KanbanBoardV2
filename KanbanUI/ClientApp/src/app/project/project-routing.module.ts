@@ -5,6 +5,7 @@ import {AuthGaurdService} from '../auth-gaurd.service';
 
 import {ProjectListComponent} from './project-list/project-list.component';
 import { ProjectDetailComponent} from './project-detail/project-detail.component';
+import {CanComponentDeactivate} from '../core/Services/CanComponentDeactivate';
 
 const projectRoutes: Routes = [
     {
@@ -15,7 +16,14 @@ const projectRoutes: Routes = [
     {
         path : 'projectdetail',
         component : ProjectDetailComponent,
-        canActivate : [AuthGaurdService]
+        canActivate : [AuthGaurdService],
+        canDeactivate : [CanComponentDeactivate]
+    },
+    {
+        path : 'projectdetail/:projectID',
+        component : ProjectDetailComponent,
+        canActivate : [AuthGaurdService],
+        canDeactivate : [CanComponentDeactivate]
     },
     {
         path : '',

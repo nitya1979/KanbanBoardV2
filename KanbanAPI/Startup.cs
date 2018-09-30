@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
 using Serilog.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 namespace KanbanAPI
 {
@@ -34,7 +35,7 @@ namespace KanbanAPI
         public void ConfigureServices(IServiceCollection services)
         {
             
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions( opt => opt.SerializerSettings.ContractResolver = new DefaultContractResolver());
             services.AddCors(options=>{
                 options.AddPolicy("AllowAllHeaders",
                                   builder => {

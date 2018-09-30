@@ -56,7 +56,6 @@ namespace KanbanAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]UserDetailModel model)
         {
-            throw new Exception("Some random error");
             Log.Information("api/User/Post");
             var userDetail = Mapper.Map<UserDetail>(model);
             userDetail.UserName = User.Identity.Name;

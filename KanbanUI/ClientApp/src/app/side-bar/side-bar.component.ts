@@ -21,7 +21,9 @@ export class SideBarComponent implements OnInit {
 
   ngOnInit() {
 
-    this.projects = this.projectService.getAll();
+    this.projectService.getAll().subscribe( result =>{
+      this.projects = result.Items;
+    });
     
     this.userEmail = this.authService.email;
 

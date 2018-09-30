@@ -121,6 +121,31 @@ namespace KanbanBoard.SqlRepository.Migrations
                     b.ToTable("tblProjectTask");
                 });
 
+            modelBuilder.Entity("KanbanBoard.SqlRepository.DbQuadrant", b =>
+                {
+                    b.Property<int>("QuadrantID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreateDate");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(150);
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(150);
+
+                    b.Property<DateTime?>("ModifyDate");
+
+                    b.Property<string>("QuadrantName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("QuadrantID");
+
+                    b.ToTable("tblQuadrant");
+                });
+
             modelBuilder.Entity("KanbanBoard.SqlRepository.KanbanRoles", b =>
                 {
                     b.Property<string>("Id")

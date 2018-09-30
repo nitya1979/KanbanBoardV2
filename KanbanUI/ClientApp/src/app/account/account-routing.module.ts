@@ -4,7 +4,7 @@ import { RouterModule, Routes} from '@angular/router';
 
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent} from './profile/profile.component';
+import { ProfileComponent, CanProfileDeactivate} from './profile/profile.component';
 import { ChangePasswordComponent}  from './change-password/change-password.component';
 import {AuthGaurdService} from '../auth-gaurd.service';
 const userRoutes: Routes = [
@@ -19,7 +19,8 @@ const userRoutes: Routes = [
     {
         path : 'profile',
         component : ProfileComponent,
-        canActivate : [AuthGaurdService]
+        canActivate : [AuthGaurdService],
+        canDeactivate : [CanProfileDeactivate]
     },
     {
         path : 'changepassword',

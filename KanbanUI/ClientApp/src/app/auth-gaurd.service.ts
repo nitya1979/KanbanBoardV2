@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate } from '@angular/router';
+import { Router, CanActivate, CanDeactivate } from '@angular/router';
 
 
 @Injectable()
@@ -24,3 +24,4 @@ export class AuthGaurdService implements CanActivate {
   }
 
 }
+

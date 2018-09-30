@@ -20,6 +20,10 @@ namespace KanbanBoardCore
            return await _repository.GetAllProjects(userName);
         }
 
+        //public async Task<KanbanCollection<Project>> GetImportant(string userName)
+        //{
+            
+        //}
         public async Task<KanbanCollection<Project>> GetAllProjects(string userName, int pageNo, int count)
         {
             return await _repository.GetAllProjects(userName, pageNo, count);
@@ -36,6 +40,15 @@ namespace KanbanBoardCore
             try
             {
                 var isNewProject = project.ProjectID == 0;
+
+                if(!isNewProject)
+                {
+                    var proj = await _repository.GetProject(project.ProjectID);
+                    project.CreatedBy = proj.CreatedBy;
+                    project.CreateDate = proj.CreateDate;
+                    project.CompletionDate = proj.CompletionDate;
+                }
+
                 _repository.BeginTranaction();
 
                 await _repository.SaveProject(project);

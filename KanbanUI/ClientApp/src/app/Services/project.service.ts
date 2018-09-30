@@ -1,20 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import {Project} from '../modals/Project';
+import { KanbanService } from './kanban.service';
+import { environment } from '../../environments/environment';
+import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
-export class ProjectService {
+export class ProjectService extends KanbanService {
 
   constructor(private http: HttpClient) {
-        
+        super();
    }
 
   getAll(){
-    return PROJECTS;
+    return this.http.get( environment.apiBase + "projects").pipe(catchError(this.handleError));
   }
 
-  save(project:Project){
+  getImportant(count:number){
+    return this.http.get( environment.apiBase + "projects").pipe(catchError(this.handleError));
+  }
+  get(projectId:number){
+    return this.http.get(environment.apiBase + "projects/"+projectId).pipe( catchError(this.handleError));
+  }
+  save(project:Project):Observable<any>{
 
+    return this.http.post( environment.apiBase + "projects", project).pipe(
+        catchError(this.handleError)
+        );
     
       
   }

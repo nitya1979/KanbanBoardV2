@@ -1,6 +1,8 @@
 
       <h3>Project Detail</h3>
       <hr  />
+      <app-alert [result]="result"></app-alert>
+      
       <form novalidate class="form" [formGroup]="projectForm" (ngSubmit)="save()" >
 
           <mat-form-field class="full-width">
@@ -26,8 +28,8 @@
           </mat-form-field>
           
           <div class="button-row" style="margin-top:50px">
-            <button mat-raised-button  color="primary" type="submit">Save</button>
-            <a mat-raised-button routerLink=".">Cancel</a>
+            <button mat-raised-button  color="primary" type="submit" [disabled]="!projectForm.valid">Save</button>
+            <a mat-raised-button [routerLink]="['/projects/projectlist']">Cancel</a>
           </div>
         </form>
         

@@ -33,8 +33,8 @@ namespace KanbanAPI.Filters
                 Log.Error(context.Exception, $"(OnExceptionAsync) Error in {context.HttpContext.Request.Path}");
             }
 
-            context.Result = new BadRequestObjectResult(KanbanResult.CreateErrorResult(
-                new List<string>() { "Something bad happened, please try again later" }));
+            context.Result = new BadRequestObjectResult(
+                new List<string>() { "Something bad happened, please try again later" });
 
             context.HttpContext.Response.StatusCode = 500;
         }

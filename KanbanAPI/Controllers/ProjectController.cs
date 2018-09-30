@@ -14,8 +14,8 @@ using System.Net.Http;
 namespace KanbanAPI.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [Produces("application/json")]
-    [Route("api")]
+    //[Produces("application/json")]
+    [Route("api/Projects")]
     public class ProjectController : Controller
     {
 
@@ -28,11 +28,10 @@ namespace KanbanAPI.Controllers
         // GET: api/Project
         [HttpGet]
         //[Route("Projects")]
-        [Route("Users/{userName}/Projects")]
         [AllowAnonymous]
-        public async Task<IActionResult> Get(string userName, int pageNo = 0, int count=0)
+        public async Task<IActionResult> Get(int pageNo = 0, int count=0)
         {
-         
+            var userName = Request.HttpContext.User.Identity.Name;
 
             KanbanCollection<Project> projects = null;
 
@@ -45,9 +44,10 @@ namespace KanbanAPI.Controllers
 
         }
 
+
         // GET: api/Project/5
         [HttpGet]
-        [Route("Projects/{id}")]
+        [Route("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> Get(int id)
         {
@@ -64,17 +64,20 @@ namespace KanbanAPI.Controllers
         
         // POST: api/Project
         [HttpPost]
-        [Route("Projects")]
-
         public async Task<IActionResult> Post([FromBody]ProjectViewModel model)
         {
             
             Project proj = Mapper.Map<Project>(model);
             if (proj.ProjectID == 0)
+            {
                 proj.CreatedBy = User.Identity.Name;
-            Console.WriteLine(proj.CreatedBy);
-            Console.WriteLine(proj.ProjectName);
-            Console.WriteLine(proj.CreateDate);
+                proj.CreateDate = DateTime.Now;
+            }
+            else
+            {
+                proj.ModifiedBy = User.Identity.Name;
+                proj.ModifyDate = DateTime.Now;
+            }
 
             await _projectService.SaveProject(proj);
 
@@ -82,7 +85,7 @@ namespace KanbanAPI.Controllers
         }
         
         // PUT: api/Project/5
-        [HttpPut("Projects/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]ProjectViewModel model)
         {
             if (id != model.ProjectID)
@@ -95,7 +98,7 @@ namespace KanbanAPI.Controllers
             return Ok();
         }
         
-        [HttpGet("Projects/{id}/stages")]
+        [HttpGet("{id}/stages")]
         [AllowAnonymous]
         public async Task<IActionResult> Stages(int id)
         {
@@ -108,7 +111,7 @@ namespace KanbanAPI.Controllers
 
         }
 
-        [HttpPost("Projects/{id}/stages")]
+        [HttpPost("{id}/stages")]
         public async Task<IActionResult> Stages([FromBody]StageViewModel model)
         {
             ProjectStage stage = Mapper.Map<ProjectStage>(model);

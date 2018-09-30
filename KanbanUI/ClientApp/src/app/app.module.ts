@@ -6,7 +6,7 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LayoutModule} from '@angular/cdk/layout'; 
 import {MatMenuModule, MatButtonModule, MatIconModule, MatCardModule , MatToolbarModule, MatSidenavModule,
-MatListModule, MatFormFieldModule, MatDatepickerModule,MatNativeDateModule, MatCheckboxModule} from '@angular/material';
+MatListModule, MatFormFieldModule, MatDatepickerModule,MatNativeDateModule, MatCheckboxModule, MatTableModule, MatDialog, MatDialogModule} from '@angular/material';
 import {GravatarModule} from 'ngx-gravatar';
 
 import { ChartsModule } from 'ng2-charts';
@@ -37,6 +37,7 @@ import { KanbanService } from './Services/kanban.service';
 
 
 
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -54,6 +55,8 @@ import { KanbanService } from './Services/kanban.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
+    MatTableModule,
+    MatDialogModule,
     ChartsModule,
     AccountModule,
     NgbModule.forRoot(),

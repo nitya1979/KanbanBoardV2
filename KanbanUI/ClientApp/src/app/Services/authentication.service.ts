@@ -39,12 +39,17 @@ export class AuthenticationService extends KanbanService {
             sessionStorage.setItem(this.TOKEN_KEY, res["access_token"]);
             sessionStorage.setItem(this.EXIPRE_ON_KEY, res["expires_on"]);
         }
-
         return  "success";
        }
      ).pipe(
        catchError(this.handleError)
      );
+   }
+
+   Logout(){
+     console.log('logging out');
+     localStorage.clear();
+     sessionStorage.clear();
    }
 
    get userName(){ 

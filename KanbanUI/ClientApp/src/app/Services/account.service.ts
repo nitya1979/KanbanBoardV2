@@ -51,11 +51,12 @@ export class AccountService extends KanbanService{
             .pipe(
               catchError(this.handleError)
             ).map( r => {
+              
                return new UserDetail({
-                 UserId : r.userName,
-                 UserName : r.userName,
-                 Email : r.email,
-                 PhoneNo : r.phoneNo
+                 UserId : r.UserName,
+                 UserName : r.UserName,
+                 Email : r.Email,
+                 PhoneNo : r.PhoneNo
                });
               });
    }
