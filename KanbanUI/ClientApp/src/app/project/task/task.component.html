@@ -1,0 +1,63 @@
+
+<div class="row">
+    <div class="col">
+        <h5>Task Detail</h5>
+    </div>
+    </div>
+  
+  <mat-card>
+    <mat-card-content>
+    <app-alert [result]="result"></app-alert>
+    
+    <form novalidate class="form" [formGroup]="taskForm" (ngSubmit)="save()" >
+  
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Summary" formControlName = "summary">
+          <mat-error>Summary is required</mat-error>
+        </mat-form-field>
+      
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="Description" formControlName="description"></textarea>
+        </mat-form-field>
+  
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Project" [matAutocomplete]="auto" formControlName= "project"  (change)="loadStages()">
+          <mat-error>Project is required</mat-error>
+        </mat-form-field>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let prj of (filteredProject | async)" [value]="prj">
+            <span>{{ prj.ProjectName }}</span>
+            <small> | ID: {{prj.ProjectID}}</small>
+          </mat-option>
+      </mat-autocomplete>
+
+        <mat-form-field class="full-width">
+          <mat-select matInput placeholder="Priority" formControlName="priority">
+            <mat-option *ngFor="let pr of priorities" [value]="pr.PriorityID">
+              {{pr.PriorityName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-select matInput placeholder="Stage" formControlName="stage">
+            <mat-option *ngFor="let stg of stages" [value]="stg.StageID">
+              {{stg.StageName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput [matDatepicker]="dueDatePicker" placeholder="Due Date" [min]="dueMin" formControlName="dueDate">
+          <mat-datepicker-toggle  matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #dueDatePicker></mat-datepicker>
+          <mat-error>End Date is required</mat-error>
+        </mat-form-field>
+        
+        <div class="button-row" style="margin-top:50px">
+          <button mat-raised-button  color="primary" type="submit" [disabled]="!taskForm.valid">Save</button>
+          <a mat-raised-button [routerLink]="['/projects/projectlist']">Cancel</a>
+        </div>
+
+      </form>
+     
+    </mat-card-content>
+  </mat-card>

@@ -17,3 +17,7 @@ body {
   .full-width {
     width: 100%;
   }
+
+  .col{
+    padding-bottom: 10px;
+  }

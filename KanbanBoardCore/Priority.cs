@@ -3,8 +3,18 @@ namespace KanbanBoardCore
 {
     public class Priority
     {
-        public Priority()
+        public int PriorityID
         {
+            get;
+            set;
+      
         }
+
+        public string PriorityName
+        {
+            get;
+            set;
+        }
+
     }
 }

@@ -22,7 +22,7 @@ export class SideBarComponent implements OnInit {
   ngOnInit() {
 
     this.projectService.getAll().subscribe( result =>{
-      this.projects = result.Items;
+      this.projects = result["Items"];
     });
     
     this.userEmail = this.authService.email;

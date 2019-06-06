@@ -22,13 +22,19 @@ namespace KanbanBoard.SqlRepository
         public string Description { get; set; }
 
         [Required]
+        public int PriorityID { get; set; }
+
+        [Required]
         public int StageID { get; set; }
 
         [Required]
         public DateTime DueDate { get; set; }
 
         public DateTime CompletionDate { get; set; }
-        
+
+        [ForeignKey("PriorityID")]
+        public DbPriority Priority { get; set; }
+
         [ForeignKey("StageID")]
         public DbProjectStage Stage { get; set; }
     }

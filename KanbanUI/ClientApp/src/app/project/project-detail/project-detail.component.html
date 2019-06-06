@@ -1,35 +1,49 @@
 
-      <h3>Project Detail</h3>
-      <hr  />
-      <app-alert [result]="result"></app-alert>
+<div class="row">
+  <div class="col">
+      <h5>Project Detail</h5>
+  </div>
+  </div>
+
+<mat-card>
+  <mat-card-content>
+  <app-alert [result]="result"></app-alert>
+  
+  <form novalidate class="form" [formGroup]="projectForm" (ngSubmit)="save()" >
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Project Name" formControlName = "name">
+        <mat-error>Project name is required</mat-error>
+      </mat-form-field>
+    
+      <mat-form-field class="full-width">
+        <textarea matInput placeholder="description" formControlName="description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-select matInput placeholder="Quadrant" formControlName="quadrant">
+          <mat-option *ngFor="let qdr of quadrants" [value]="qdr.QuadrantID">
+            {{qdr.QuadrantName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput [matDatepicker]="picker" placeholder="Start Date" formControlName="startDate" (dateChange)="addEvent('change', $event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>Start Date is required</mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput [matDatepicker]="dueDatePicker" placeholder="Due Date" [min]="dueMin" formControlName="dueDate">
+        <mat-datepicker-toggle  matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #dueDatePicker></mat-datepicker>
+        <mat-error>End Date is required</mat-error>
+      </mat-form-field>
       
-      <form novalidate class="form" [formGroup]="projectForm" (ngSubmit)="save()" >
-
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Project Name" formControlName = "name">
-            <mat-error>Project name is required</mat-error>
-          </mat-form-field>
-        
-          <mat-form-field class="full-width">
-            <textarea matInput placeholder="Leave a comment" formControlName="description"></textarea>
-          </mat-form-field>
-
-          <mat-form-field class="full-width">
-            <input matInput [matDatepicker]="picker" placeholder="Start Date" formControlName="startDate" (dateChange)="addEvent('change', $event)">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error>Start Date is required</mat-error>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <input matInput [matDatepicker]="dueDatePicker" placeholder="Due Date" [min]="dueMin" formControlName="dueDate">
-            <mat-datepicker-toggle  matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #dueDatePicker></mat-datepicker>
-            <mat-error>End Date is required</mat-error>
-          </mat-form-field>
-          
-          <div class="button-row" style="margin-top:50px">
-            <button mat-raised-button  color="primary" type="submit" [disabled]="!projectForm.valid">Save</button>
-            <a mat-raised-button [routerLink]="['/projects/projectlist']">Cancel</a>
-          </div>
-        </form>
-        
+      <div class="button-row" style="margin-top:50px">
+        <button mat-raised-button  color="primary" type="submit" [disabled]="!projectForm.valid">Save</button>
+        <a mat-raised-button [routerLink]="['/projects/projectlist']">Cancel</a>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -68,6 +68,7 @@ namespace KanbanAPI.Controllers
         {
             
             Project proj = Mapper.Map<Project>(model);
+            proj.QuadrantID = model.Quadrant;
             if (proj.ProjectID == 0)
             {
                 proj.CreatedBy = User.Identity.Name;
@@ -92,7 +93,7 @@ namespace KanbanAPI.Controllers
                 throw new ArgumentException("Incorrect project detail.");
 
             Project proj = Mapper.Map<Project>(model);
-
+            proj.QuadrantID = model.Quadrant;
             await _projectService.SaveProject(proj);
 
             return Ok();
@@ -133,6 +134,38 @@ namespace KanbanAPI.Controllers
             
         }
 
+        [HttpGet("quadrants")]
+        public async Task<IActionResult> Quadrants()
+        {
+            var quadrants = await _projectService.GetQuadrants();
+
+            return Ok(quadrants);
+        }
+
+        [HttpGet("important/{count}")]
+        public async Task<IActionResult> Important(int count = 4)
+        {
+            var userName = User.Identity.Name;
+
+            var projects = await _projectService.GetImportant(userName, count);
+
+            return Ok(projects);
+
+        }
+
+        [HttpGet]
+        [Route("search/{name?}")]
+        public async Task<IActionResult> Search(string name = "")
+        {
+            Console.WriteLine("name :" + name);
+            var projects = await _projectService.GetAllProjects(Request.HttpContext.User.Identity.Name);
+
+            if (!string.IsNullOrEmpty(name))
+                return Ok(projects.Items.Where(p => p.ProjectName.Contains(name, StringComparison.CurrentCultureIgnoreCase)));
+            else
+                return Ok(projects.Items);
+
+        }
 
     }
 }

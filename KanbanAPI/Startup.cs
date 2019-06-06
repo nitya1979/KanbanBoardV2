@@ -78,7 +78,8 @@ namespace KanbanAPI
             services.AddTransient<UserService, UserService>();
             services.AddTransient<IProjectRepository, SqlProjectRepository>();
             services.AddTransient<ProjectService, ProjectService>();
-
+            services.AddTransient<ITaskRepository, SqlTaskRepository>();
+            services.AddTransient<TaskService, TaskService>();
             services.AddMvc(options =>
             {
                 options.Filters.Add(new KanbanExceptionFilterAttribute());
@@ -124,11 +125,14 @@ namespace KanbanAPI
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<UserDetail, UserEntity>().ReverseMap();
+                cfg.CreateMap<CoreObject, KanbanEntity>().ReverseMap();
                 cfg.CreateMap<Project, DbProject>().IncludeBase<CoreObject, KanbanEntity>() .ReverseMap();
+                cfg.CreateMap<Quadrant, DbQuadrant>().ReverseMap();
                 cfg.CreateMap<ProjectStage, DbProjectStage>().ReverseMap();
-                cfg.CreateMap<ProjectTask, DbProjectTask>().ReverseMap();
+                cfg.CreateMap<ProjectTask, DbProjectTask>().IncludeBase<CoreObject, KanbanEntity>().ReverseMap();
                 cfg.CreateMap<ProjectViewModel, Project>();
                 cfg.CreateMap<StageViewModel, ProjectStage>();
+                cfg.CreateMap<ProjectTaskViewModel, ProjectTask>();
                 cfg.CreateMap<UserDetailModel, UserDetail>().ReverseMap();
             });
         }

@@ -1,5 +1,13 @@
-<h3>Register</h3>
 
+<div class="row">
+        <div class="col">
+            <h5>Register</h5>
+        </div>
+    </div>
+    <div class="row">
+<div class="col">
+<mat-card>
+        <mat-card-content>
 <form [formGroup]="registerForm" novalidate class="form" (ngSubmit)="register()">
     <mat-form-field class="full-width">
         <input matInput type="text" formControlName="userName" name="userName" placeholder="UserName" (blur)="validateUser()" >
@@ -27,3 +35,7 @@
         <a mat-raised-button routerLink=".">Cancel</a>
     </div>
 </form>
+</mat-card-content>
+</mat-card>
+</div> 
+</div>

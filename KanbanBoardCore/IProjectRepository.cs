@@ -18,6 +18,9 @@ namespace KanbanBoardCore
         Task SaveProject(Project project);
 
         Task SaveStage(ProjectStage stage);
-        
+
+        Task<List<Quadrant>> GetQuadrants();
+
+        Task<List<Project>> GetImportant(string userName, int count);
     }
 }

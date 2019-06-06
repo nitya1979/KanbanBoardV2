@@ -17,4 +17,7 @@
     <ProjectReference Include="..\KanbanBoardCore\KanbanBoardCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="DbTask.cs" />
+  </ItemGroup>
 </Project>

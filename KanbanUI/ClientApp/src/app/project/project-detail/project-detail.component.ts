@@ -8,6 +8,7 @@ import {ISavable} from '../../core/model/ISavable';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import {ConfirmDialogComponent} from '../../core/confirm-dialog/confirm-dialog.component';
+import { Jsonp } from '@angular/http/src/http';
 
 @Component({
   selector: 'project-detail',
@@ -20,6 +21,7 @@ export class ProjectDetailComponent implements OnInit, ISavable {
   dueMin:Date;
   result:DnpResult;
   projectId:number = 0;
+  quadrants:any;
 
   constructor(private projectService:ProjectService, 
               private activatedRoute:ActivatedRoute, 
@@ -37,19 +39,23 @@ export class ProjectDetailComponent implements OnInit, ISavable {
 
       this.project = new Project();
       this.createProjectForm();
-
-      this.projectService.get(this.projectId).subscribe(result =>{
-        this.project = new Project({
-          ProjectID : result.ProjectID,
-          ProjectName : result.ProjectName,
-          Description : result.Description,
-          StartDate : result.StartDate,
-          DueDate : result.DueDate
-        });
-        console.log(JSON.stringify(this.project));
-        this.createProjectForm();
-      })
-
+      this.projectService.getQuadrants().subscribe( qdr =>{
+        this.quadrants = qdr;
+        if( this.projectId != 0){
+          this.projectService.get(this.projectId).subscribe(result =>{
+            this.project = new Project({
+              ProjectID : result["ProjectID"],
+              ProjectName : result["ProjectName"],
+              Quadrant : result["QuadrantID"],
+              Description : result["Description"],
+              StartDate : result["StartDate"],
+              DueDate : result["DueDate"]
+            });
+            console.log(JSON.stringify(result));
+            this.createProjectForm();
+          });
+        }
+      });
 
     this.dueMin = new Date();
   }
@@ -59,7 +65,8 @@ export class ProjectDetailComponent implements OnInit, ISavable {
     if( this.project.ProjectName != this.projectForm.controls['name'].value ||
         this.project.Description != this.projectForm.controls['description'].value ||
         this.project.StartDate != this.projectForm.controls['startDate'].value ||
-        this.project.DueDate != this.projectForm.controls['dueDate'].value )
+        this.project.DueDate != this.projectForm.controls['dueDate'].value ||
+        this.project.Quadrant != this.projectForm.controls['quadrant'].value )
     {
       var dialogRef = this.dialog.open( ConfirmDialogComponent, {data :{ message : "There are unsaved changes. Do you want to save?"}});
       dialogRef.afterClosed().subscribe( result =>{
@@ -68,6 +75,7 @@ export class ProjectDetailComponent implements OnInit, ISavable {
         {
           console.log( "TRUE:"+ result);
             this.save();
+            return true;
         }
         
         if( result == false)
@@ -78,8 +86,11 @@ export class ProjectDetailComponent implements OnInit, ISavable {
             name : this.project.ProjectName,
             description : this.project.Description,
             startDate : this.project.StartDate,
-             dueDate : this.project.DueDate
-           })
+            dueDate : this.project.DueDate,
+            quadrant : this.project.Quadrant
+           });
+
+           return true;
         }
 
       });
@@ -91,6 +102,7 @@ export class ProjectDetailComponent implements OnInit, ISavable {
     this.projectForm = new FormGroup({
       name : new FormControl(this.project.ProjectName, Validators.required),
       description: new FormControl(this.project.Description),
+      quadrant : new FormControl(this.project.Quadrant, Validators.required ),
       startDate: new FormControl(this.project.StartDate, [
         Validators.required
       ]),
@@ -113,7 +125,8 @@ export class ProjectDetailComponent implements OnInit, ISavable {
         this.project.Description = this.projectForm.controls['description'].value;
         this.project.StartDate = this.projectForm.controls['startDate'].value;
         this.project.DueDate = this.projectForm.controls['dueDate'].value;
-      
+        this.project.Quadrant = this.projectForm.controls['quadrant'].value;
+
         this.projectService.save(this.project).subscribe( result =>{
           this.result = new DnpResult({
             Success : true,

@@ -16,12 +16,13 @@ namespace KanbanAPI.Filters
         }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
+            
             if(!context.ModelState.IsValid)
             {
-                
+                Console.WriteLine("Model Error");
                 var Errors = context.ModelState.SelectMany(x => x.Value.Errors)
                                     .Select(x => x.ErrorMessage).ToArray();
-
+                
                 foreach( var err in Errors)
                 {
                     Log.Error(err);

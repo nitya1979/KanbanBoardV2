@@ -27,8 +27,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.createForm(); 
     this.accountService.getUserDetail('nityaprakash').subscribe(data=>{
-      this.userDetail = data
-      alert(JSON.stringify(this.userDetail));
+      this.userDetail = data;
       this.setModel();
 
     });

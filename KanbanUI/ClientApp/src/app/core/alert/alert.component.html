@@ -1,0 +1,6 @@
+<div *ngIf="result.Messages.length > 0 && showAlert">{{showAlert}}
+  <div class="alert alert-success" [ngClass]="{'alert-success':result.Success, 'alert-danger':!result.Success}" role="alert" >
+      
+    <p *ngFor="let m of result.Messages">{{m}}</p>
+    </div>
+</div>

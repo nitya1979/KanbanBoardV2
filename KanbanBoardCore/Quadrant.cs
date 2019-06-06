@@ -1,11 +1,19 @@
 ﻿using System;
 namespace KanbanBoardCore
 {
-    public enum Quadrant
+    public class Quadrant : CoreObject
     {
-        CriticalImportant = 1,
-        CriticalNotImportant = 2,
-        NotCriticalImportant = 3,
-        NotCriticalNotImportant = 4
+        public int QuadrantID
+        {
+            get;
+            set;
+        }
+
+        public string QuadrantName
+        {
+            get;
+            set;
+        }
+
     }
 }

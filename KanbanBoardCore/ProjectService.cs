@@ -20,10 +20,11 @@ namespace KanbanBoardCore
            return await _repository.GetAllProjects(userName);
         }
 
-        //public async Task<KanbanCollection<Project>> GetImportant(string userName)
-        //{
-            
-        //}
+        public async Task<List<Project>> GetImportant(string userName, int count)
+        {
+            return await _repository.GetImportant(userName, count);
+        }
+
         public async Task<KanbanCollection<Project>> GetAllProjects(string userName, int pageNo, int count)
         {
             return await _repository.GetAllProjects(userName, pageNo, count);
@@ -77,6 +78,9 @@ namespace KanbanBoardCore
 
         public async Task SaveStage(ProjectStage stage)
         {
+            if (stage == null)
+                throw new ArgumentNullException("ProjectStage can not be null");
+            
             await _repository.SaveStage(stage);
         }
 
@@ -88,6 +92,10 @@ namespace KanbanBoardCore
             return await _repository.GetAllStages(projectID);
         }
 
+        public async Task<List<Quadrant>> GetQuadrants()
+        {
+            return await _repository.GetQuadrants();
+        }
         //public async Task Complete(int projectId)
         //{
         //    Project proj = await _repository.GetProject(projectId);

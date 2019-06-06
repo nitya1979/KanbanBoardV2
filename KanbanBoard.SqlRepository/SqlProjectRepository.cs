@@ -101,6 +101,26 @@ namespace KanbanBoard.SqlRepository
             });
         }
 
+        public Task<List<Project>> GetImportant(string userName, int count)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                List<DbProject> dbProjects = _dbContext.Project.Where(p => p.CreatedBy == userName && p.CompletionDate == null)
+                                                       .OrderBy(p => p.QuadrantID)
+                                                       .ThenBy(p => p.DueDate).Take(count).ToList();
+
+                List<Project> projects = new List<Project>();
+
+                foreach(var dbp in dbProjects)
+                {
+                    projects.Add(Mapper.Map<Project>(dbp));
+                }
+
+                return projects;
+            });
+             
+        }
+
         public Task<Project> GetProject(int projectID)
         {
             return Task.Factory.StartNew(() =>
@@ -114,6 +134,21 @@ namespace KanbanBoard.SqlRepository
                 
             });
             
+        }
+
+        public Task<List<Quadrant>> GetQuadrants()
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                List<Quadrant> quadrants = new List<Quadrant>();
+                foreach(var dbq in _dbContext.Quadrants.ToList())
+                {
+                    quadrants.Add(Mapper.Map<Quadrant>(dbq));
+
+                }
+
+                return quadrants;
+            });
         }
 
         public void RollbackTransaction()
@@ -145,6 +180,7 @@ namespace KanbanBoard.SqlRepository
                     dbProject.ModifiedBy = project.ModifiedBy;
                     dbProject.ProjectName = project.ProjectName;
                     dbProject.Description = project.Description;
+                    dbProject.QuadrantID = project.QuadrantID;
                     dbProject.StartDate = project.StartDate;
                     dbProject.DueDate = project.DueDate;
                     dbProject.CompletionDate = project.CompletionDate;

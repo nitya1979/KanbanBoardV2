@@ -6,10 +6,10 @@
         <img  ngxGravatar [email]="userEmail" size="160" class="img-responsive rounded-circle" /><br /><br />
       </div>
       <mat-nav-list>
-            <ng-container *ngFor="let p of projects">
-                <a  mat-list-item [title]="p.ProjectName" >{{p.ProjectName}}</a>
-                
-            </ng-container>
+        <a mat-list-item [routerLink]="['/dashboard']"  ><mat-icon>dashboard</mat-icon>&nbsp;Dashboard</a>
+        <a mat-list-item [routerLink]="['/projects/projectlist']"  ><mat-icon>list</mat-icon>&nbsp;Projects</a>
+          <a mat-list-item title="Profile" [routerLink]="['/account/profile']"><mat-icon>person_outline</mat-icon>&nbsp;Profile</a>
+          <a mat-list-item title="Change Password" [routerLink]="['/account/changepassword']"><mat-icon>person_outline</mat-icon>&nbsp;Change Password</a>
         </mat-nav-list>
     </div>
 </ng-container>

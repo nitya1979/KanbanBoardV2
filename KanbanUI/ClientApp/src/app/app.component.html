@@ -1,34 +1,16 @@
-<div class="navbartop">
+<div class="navbartop" >
         <mat-toolbar>
                 <mat-toolbar-row>
                     <button mat-icon-button (click)="snav.toggle()" *ngIf="IsAuthenticated"><mat-icon>menu</mat-icon></button>
                     <h1 class="example-app-name">KanbanBoard</h1>
-                    <button mat-button [routerLink]="['/dashboard']"  >Dashboard</button>
-                    <button mat-button [routerLink]="['/projects/projectlist']"  >Projects</button>
-                    <button mat-button [matMenuTriggerFor]="newMenu">New</button>
+                    
+                    <button mat-button [matMenuTriggerFor]="newMenu"><mat-icon>add</mat-icon></button>
                     <mat-menu #newMenu="matMenu">
                         <button mat-menu-item [routerLink]="['/projects/projectdetail']">Project</button>
-                        <button mat-menu-item>Task</button>
+                        <button mat-menu-item [routerLink]="['/projects/task']">Task</button>
                     </mat-menu>
                     <span class="example-fill-remaining-space"></span>
-                    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="IsAuthenticated">
-                        <mat-icon>settings</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item [routerLink]="['/account/profile']">
-                            <mat-icon>person_outline</mat-icon>
-                            <span>Profile</span>
-                        </button>
-                        <button mat-menu-item [routerLink]="['/account/changepassword']">
-                            <mat-icon>person_outline</mat-icon>
-                            <span>Change Password</span>
-                        </button>
-                        <button mat-menu-item (click)="Logout()">
-                            <mat-icon>exit_to_app</mat-icon>
-                        <span>Log Out</span>
-                    </button>
-                  </mat-menu>
-
+                   <button mat-button (click)="Logout()"><mat-icon>exit_to_app</mat-icon></button>
                 </mat-toolbar-row>
               </mat-toolbar>
 </div>

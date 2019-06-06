@@ -14,9 +14,9 @@ export class DashBoardComponent implements OnInit {
 
   ngOnInit() {
 
-   this.projectSvc.getAll().subscribe( result =>{
+   this.projectSvc.getImportant(4).subscribe( result =>{
      
-     this.projects = result.Items;
+     this.projects = result;
    });
   }
 

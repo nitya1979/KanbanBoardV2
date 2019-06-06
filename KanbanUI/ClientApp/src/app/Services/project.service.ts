@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import {Project} from '../modals/Project';
+import {Project, ProjectStage} from '../modals/Project';
 import { KanbanService } from './kanban.service';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
@@ -17,11 +17,24 @@ export class ProjectService extends KanbanService {
     return this.http.get( environment.apiBase + "projects").pipe(catchError(this.handleError));
   }
 
+  getQuadrants(){
+    return this.http.get(environment.apiBase + "projects/quadrants").pipe(catchError(this.handleError));
+  }
+  
+  getProjectStages(projectId:number){
+    return this.http.get<ProjectStage>(environment.apiBase + "projects/"+projectId+"/stages")
+                    .pipe( catchError(this.handleError));
+  }
+
   getImportant(count:number){
-    return this.http.get( environment.apiBase + "projects").pipe(catchError(this.handleError));
+    return this.http.get( environment.apiBase + "projects/important/"+count).pipe(catchError(this.handleError));
   }
   get(projectId:number){
     return this.http.get(environment.apiBase + "projects/"+projectId).pipe( catchError(this.handleError));
+  }
+
+  search(name:string){
+    return this.http.get<Project>( environment.apiBase+ "projects/search/"+name).pipe( catchError(this.handleError));
   }
   save(project:Project):Observable<any>{
 
@@ -32,64 +45,3 @@ export class ProjectService extends KanbanService {
       
   }
 }
-
-const PROJECTS = [{
-    ID : 1,
-    Name : "Project 1",
-    Description : "This is discription of Porject 1",
-    StartDate : new Date("1/1/2017"),
-    EndDate : new Date("3/1/2017"),
-    States:[{
-        ID : 1,
-        Name : "Back Log",
-        Order : 1
-        },
-        { ID : 2,
-        Name : "In Progress",
-        Order : 2,
-        },
-        { ID :3,
-        Name : "Completed",
-        Order : 3
-        }]
-},{
-    ID : 2,
-    Name : "Project 2",
-    Description : "This is discription of Porject 2",
-    StartDate : new Date("1/1/2017"),
-    EndDate : new Date("3/1/2017"),
-    States:[{
-        ID : 4,
-        Name : "Back Log",
-        Order : 1
-        },
-        { ID : 5,
-        Name : "In Progress",
-        Order : 2,
-        },
-        { ID :6,
-        Name : "Completed",
-        Order : 3
-        }]
-},{
-    ID : 3,
-    Name : "Project 3",
-    Description : "This is discription of Porject 3",
-    StartDate : new Date("1/1/2017"),
-    EndDate : new Date("3/1/2017"),
-    States:[{
-        ID : 4,
-        Name : "Back Log",
-        Order : 1
-        },
-        { ID : 5,
-        Name : "In Progress",
-        Order : 2,
-        },
-        { ID :6,
-        Name : "Completed",
-        Order : 3
-        }]
-}
-
-]

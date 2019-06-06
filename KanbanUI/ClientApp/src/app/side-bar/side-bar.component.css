@@ -10,7 +10,7 @@
     padding-top:10px;
 }
 
-a {
+a, a:hover, a:visited {
     color: #dddddd;
 }
 

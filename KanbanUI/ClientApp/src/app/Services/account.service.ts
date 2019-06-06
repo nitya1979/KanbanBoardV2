@@ -3,7 +3,7 @@ import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http'
 import {RegisterModel, ChangePasswordModel} from '../modals/RegisterModel';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError,map } from 'rxjs/operators';
 import { KanbanService } from './kanban.service';
 import { UserDetail } from '../modals/User';
 
@@ -38,7 +38,7 @@ export class AccountService extends KanbanService{
             );
    }
 
-   updatePassword(changePasswordModel:ChangePasswordModel):Observable<any>{
+   updatePassword(changePasswordModel:ChangePasswordModel):Observable<Object>{
      return this.httpClient.post(environment.apiBase + "account/changepassword", changePasswordModel)
                 .pipe(
                   catchError(this.handleError)
@@ -49,19 +49,21 @@ export class AccountService extends KanbanService{
 
     return this.httpClient.get(environment.apiBase+"users/"+userName)
             .pipe(
-              catchError(this.handleError)
-            ).map( r => {
+              catchError(this.handleError),
+              map( r => {
               
-               return new UserDetail({
-                 UserId : r.UserName,
-                 UserName : r.UserName,
-                 Email : r.Email,
-                 PhoneNo : r.PhoneNo
-               });
-              });
+                return new UserDetail({
+                  UserId : r["UserName"],
+                  UserName : r["UserName"],
+                  Email : r["Email"],
+                  PhoneNo : r["PhoneNo"]
+                });
+               })
+          
+            );
    }
 
-   updateProfile(user:UserDetail):Observable<any>{
+   updateProfile(user:UserDetail):Observable<Object>{
 
     return this.httpClient.post(environment.apiBase + "users", user)
                           .pipe(

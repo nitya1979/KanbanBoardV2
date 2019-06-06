@@ -11,11 +11,15 @@ namespace KanbanAPI.ViewModels
 
         public int ProjectID { get; set; }
 
-        [Required( AllowEmptyStrings = false, ErrorMessage = "Project Name is required.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Project Name is required.")]
         public string ProjectName { get; set; }
 
-        [Required( AllowEmptyStrings =false, ErrorMessage = "Project Description is required.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Project Description is required.")]
         public string Description { get; set; }
+
+        [Required(ErrorMessage = "Quadrant of project is required.")]
+        public int Quadrant { get; set; }
+
 
         public DateTime StartDate { get; set; }
 

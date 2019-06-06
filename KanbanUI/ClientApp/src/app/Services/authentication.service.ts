@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import { Token } from '@angular/compiler';
-import {Observable} from 'rxjs';
-import {_throw } from 'rxjs/observable/throw';
-import { catchError, retry } from 'rxjs/operators';
+//import {Observable, throwError as _throw } from 'rxjs';
+import { catchError, retry , map} from 'rxjs/operators';
 import { KanbanService } from './kanban.service';
 
 @Injectable()
@@ -22,7 +21,7 @@ export class AuthenticationService extends KanbanService {
      
        const options ={ params: new HttpParams().set('UserName', userName).set('password', password)};
 
-       return this.http.get( environment.apiBase+ "token", options).map(
+       return this.http.get( environment.apiBase+ "token", options).pipe( map(
        res =>{ 
         
          localStorage.clear();
@@ -40,8 +39,7 @@ export class AuthenticationService extends KanbanService {
             sessionStorage.setItem(this.EXIPRE_ON_KEY, res["expires_on"]);
         }
         return  "success";
-       }
-     ).pipe(
+       }),
        catchError(this.handleError)
      );
    }

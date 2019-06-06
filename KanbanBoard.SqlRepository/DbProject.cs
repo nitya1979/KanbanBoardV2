@@ -20,6 +20,8 @@ namespace KanbanBoard.SqlRepository
         [MaxLength(500)]
         public string Description { get; set; }
 
+        public int QuadrantID { get; set; }
+
         [Required]
         public DateTime StartDate { get; set; }
 
@@ -30,5 +32,7 @@ namespace KanbanBoard.SqlRepository
 
         public List<DbProjectStage> Stages { get; set; }
 
+//        [ForeignKey("QuadrantID")]
+//        public DbQuadrant Quadrant { get; set; }
     }
 }

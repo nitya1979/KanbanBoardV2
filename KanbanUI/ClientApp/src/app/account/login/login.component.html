@@ -1,6 +1,12 @@
-<div class="col-md-12">
-<h3>login</h3>
-<hr />
+<div class="row">
+        <div class="col">
+            <h5>login</h5>
+        </div>
+    </div>
+    <div class="row">
+<div class="col">
+<mat-card>
+        <mat-card-content>
 
 <form novalidate class="form" #loginForm="ngForm" (ngSubmit)="login()">
     <div class="alert alert-danger" role="alert" *ngIf="loginError">
@@ -22,4 +28,7 @@
     </div>
 
 </form>
+</mat-card-content>
+</mat-card>
+</div> 
 </div>

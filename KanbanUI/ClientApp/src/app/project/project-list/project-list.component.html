@@ -1,11 +1,16 @@
 <div class="row">
-    <div class="col">
-        <h3>Projects</h3>
-    </div>
+  <div class="col">
+    <mat-card>
+        <h5>Projects</h5>
+    </mat-card>
+  </div>
 </div>
 <div class="row">
-    <div class="col-md-3 col-sm-4 col-xs-6 bottom-card-margin"   *ngFor="let p of projects">
-    <mat-card>
+  <div class="column">
+    
+  </div>
+    <div class="col-md-3 col-sm-4 col-xs-6 bottom-card-margin"  *ngFor="let p of projects">
+    <mat-card class="mat-elevation-z8" style="height:100%">  
         <mat-card-header>
           <mat-card-title>{{p.ProjectName}}</mat-card-title>
         </mat-card-header>

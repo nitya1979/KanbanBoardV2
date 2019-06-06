@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace KanbanBoardCore
@@ -12,14 +13,13 @@ namespace KanbanBoardCore
 
         public string Description { get; set; }
 
-        public Project  Project { get; set; }
+        public int PriorityID { get; set; }
 
-        public ProjectStage Stage { get; set; }
+        public int StageID { get; set; }
 
         public DateTime DueDate { get; set; }
 
         public DateTime CompletionDate { get; set; }
 
-        public DateTime dateTime { get; set; }
     }
 }

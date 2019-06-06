@@ -6,7 +6,9 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LayoutModule} from '@angular/cdk/layout'; 
 import {MatMenuModule, MatButtonModule, MatIconModule, MatCardModule , MatToolbarModule, MatSidenavModule,
-MatListModule, MatFormFieldModule, MatDatepickerModule,MatNativeDateModule, MatCheckboxModule, MatTableModule, MatDialog, MatDialogModule} from '@angular/material';
+MatListModule, MatFormFieldModule, MatDatepickerModule,MatNativeDateModule, MatCheckboxModule, MatTableModule, MatDialog, MatDialogModule, MatAutocompleteModule} from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import {GravatarModule} from 'ngx-gravatar';
 
 import { ChartsModule } from 'ng2-charts';
@@ -19,7 +21,7 @@ import {AuthGaurdService} from './auth-gaurd.service';
 import {AccountService} from './Services/account.service';
 
 import { AppComponent } from './app.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
+
 import { FooterComponent } from './footer/footer.component';
 import { ContainerComponent } from './container/container.component';
 import { DashBoardComponent } from './dash-board/dash-board.component';
@@ -29,10 +31,12 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { ProjectService} from './Services/project.service';
 import { TaskListComponent } from './task-list/task-list.component';
 import { AuthenticationService } from './Services/authentication.service';
-import { from } from 'rxjs/observable/from';
+import { from } from 'rxjs';
 import { httpFactory } from '@angular/http/src/http_module';
 import { CompareValidadatorDirective } from './directives/compare-validadator.directive';
 import { KanbanService } from './Services/kanban.service';
+import { TaskService } from './Services/task.service';
+
 
 
 
@@ -57,18 +61,19 @@ import { KanbanService } from './Services/kanban.service';
     MatCheckboxModule,
     MatTableModule,
     MatDialogModule,
+    MatAutocompleteModule,
     ChartsModule,
     AccountModule,
     NgbModule.forRoot(),
     ProjectModule,
     LayoutModule,
+    FlexLayoutModule,
     GravatarModule
   ],
 
   declarations: [
     AppComponent,
     SideBarComponent,
-    NavBarComponent,
     FooterComponent,
     ContainerComponent,
     DashBoardComponent,
@@ -86,6 +91,7 @@ import { KanbanService } from './Services/kanban.service';
       useClass: KanbanHttpInterceptor,
       multi: true
     } , 
+    TaskService,
     AuthenticationService,
     AccountService
   ],

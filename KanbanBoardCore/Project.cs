@@ -17,6 +17,12 @@ namespace KanbanBoardCore
 
         public DateTime DueDate { get; set; }
 
+        public int QuadrantID
+        {
+            get;
+            set;
+        }
+
         public DateTime? CompletionDate
         {
             get

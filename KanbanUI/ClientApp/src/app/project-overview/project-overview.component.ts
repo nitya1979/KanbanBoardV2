@@ -1,5 +1,5 @@
 import { Component, OnInit,Input, Output,EventEmitter } from '@angular/core';
-import {Project, TaskStates} from '../modals/Project'
+import {Project} from '../modals/Project'
 
 @Component({
   selector: 'app-project-overview',
@@ -8,13 +8,13 @@ import {Project, TaskStates} from '../modals/Project'
 })
 export class ProjectOverviewComponent implements OnInit {
   @Input() project:any;
-
+  backlog:number = 25;
   doughnutChartLabels:string[] = ['Back Log', 'In Progress', 'Completed'];
   doughnutChartData:number[] = [350, 450, 100];
   doughnutChartType:string = 'doughnut';
   doughnutChartColor = ['rgb(255,0,0)', "rgb(0,255,0)","rgb(0,0,255)"];
   options:any = { legend:{display:false}, 
-  cutoutPercentage : 60
+  cutoutPercentage : 70
 };
 
 

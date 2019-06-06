@@ -1,8 +1,8 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/observable/throw'
-import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs';
+import {catchError}  from 'rxjs/operators';
+
 import { error } from 'selenium-webdriver';
 import { AuthenticationService } from './Services/authentication.service';
 
@@ -11,7 +11,7 @@ export class KanbanHttpInterceptor implements HttpInterceptor {
 
     constructor(private authService: AuthenticationService){}
     
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(req: HttpRequest<object>, next: HttpHandler): Observable<HttpEvent<any>> {
         
         console.log("intercepted request ... ");
         var token =  this.authService.accessToken;
@@ -23,24 +23,26 @@ export class KanbanHttpInterceptor implements HttpInterceptor {
         console.log("Sending request with new header now ...");
 
         //send the newly created request
-        return next.handle(authReq)
-                        .catch((error, caught) => {
+        return next.handle(authReq).pipe(
+                        catchError((error, caught) => {
                             //intercept the respons error and displace it to the console
                             console.log("Error Occurred");
                             console.log(error);
         
                             //return the error to the method that called it
                             return Observable.throw(error);
-                        }) as any;
+                        }) 
+                        )
         }
         else{
-            return next.handle(req)
-                            .catch((error, caught) => {
+            return next.handle(req).pipe(
+                            catchError((error, caught) => {
                                 console.log("Error Occured without Auth");
                                 console.log(error);
 
                                 return Observable.throw(error);
-                            }) as any;
+                            }) 
+                        )
         }
 }
 }

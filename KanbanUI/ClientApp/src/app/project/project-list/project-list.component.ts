@@ -13,7 +13,7 @@ export class ProjectListComponent implements OnInit {
   ngOnInit() {
 
     this.projService.getAll().subscribe(result =>{
-      this.projects = result.Items;
+      this.projects = result["Items"];
     })
   }
 
